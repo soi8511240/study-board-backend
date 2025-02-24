@@ -3,5 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+    <insert id="save" parameterType="board">
+        INSERT INTO board (title, content, writer, password)
+            VALUES(#{title}, #{content}, #{writer}, #{password});
+    </insert>
 
+    <select id="findAll" resultType="board">
+        SELECT *,DATE_FORMAT(created_at, '%Y-%m-%d') AS createdAt
+        FROM board
+        WHERE useYn != 'N';
+#         SELECT * FROM board ORDER BY id DESC;
+    </select>
 </mapper>

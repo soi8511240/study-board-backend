@@ -20,8 +20,9 @@ CREATE TABLE board (
 );
 COMMIT;
 
-SELECT * FROM board;
-SELECT * FROM board WHERE useYn != 1 AND id=5;
+SELECT * FROM board ORDER BY id DESC;
+SELECT *,DATE_FORMAT(created_at, '%Y-%m-%d') AS createdAt  FROM board WHERE useYn != 'N';
+SELECT * FROM board WHERE useYn != 'N' AND id=5;
 SELECT id, title, content, writer, viewCnt, created_at, updated_at
 FROM board
 WHERE useYn = 'Y';
