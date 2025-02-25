@@ -4,5 +4,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="kr.co.test.week2board.board.dto.BoardDTO" alias="board"/>
+        <typeAlias type="kr.co.test.week2board.codes.dto.CategoryDTO" alias="category"/>
     </typeAliases>
 </configuration>

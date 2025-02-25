@@ -1,5 +1,6 @@
 package kr.co.test.week2board.board.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,6 +19,7 @@ public class BoardDTO {
     private String replyYn;
     private String createdAt;
     private String updatedAt;
-    private int viewCount;
+    private int viewCnt;
+    private String categoryCode;
     private String categoryName;
 }

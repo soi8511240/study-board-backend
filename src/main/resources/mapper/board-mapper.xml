@@ -9,9 +9,26 @@
     </insert>
 
     <select id="findAll" resultType="board">
-        SELECT *,DATE_FORMAT(created_at, '%Y-%m-%d') AS createdAt
-        FROM board
-        WHERE useYn != 'N';
-#         SELECT * FROM board ORDER BY id DESC;
+        SELECT b.*, c.name AS categoryName
+        FROM board b
+                 LEFT JOIN category c ON b.categoryCode = c.id
+        WHERE b.useYn != 'N'
+        ORDER BY b.id DESC;
     </select>
+
+    <select id="findById" parameterType="Long" resultType="board">
+        SELECT *
+#              ,DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdDt
+#              ,DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedDt
+        FROM board
+        WHERE useYn != 'N'
+        AND id = #{id};
+    </select>
+
+    <update id="updateViewCnt" parameterType="Long">
+        UPDATE board
+        SET viewCnt = viewCnt + 1
+        WHERE id = #{id};
+    </update>
+
 </mapper>
