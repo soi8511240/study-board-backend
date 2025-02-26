@@ -3,32 +3,64 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
-    <insert id="save" parameterType="board">
-        INSERT INTO board (title, content, writer, password)
-            VALUES(#{title}, #{content}, #{writer}, #{password});
+    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO board (title, content, writer, password, attachYn, categoryCode)
+        VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
     </insert>
 
     <select id="findAll" resultType="board">
         SELECT b.*, c.name AS categoryName
         FROM board b
                  LEFT JOIN category c ON b.categoryCode = c.id
-        WHERE b.useYn != 'N'
+        WHERE b.useYn = 'Y'
         ORDER BY b.id DESC;
     </select>
 
     <select id="findById" parameterType="Long" resultType="board">
-        SELECT *
-#              ,DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdDt
-#              ,DATE_FORMAT(updatedAt, '%Y-%m-%d') AS updatedDt
-        FROM board
-        WHERE useYn != 'N'
-        AND id = #{id};
+        SELECT b.*, c.name AS categoryName
+        FROM board b
+                 LEFT JOIN category c ON b.categoryCode = c.id
+        WHERE b.useYn = 'Y'
+        AND b.id = #{id}
+        ORDER BY b.id DESC;
     </select>
+
+    <update id="update" parameterType="board">
+        UPDATE board
+        SET
+            title = #{title},
+            content = #{content},
+            writer = #{writer},
+            categoryCode = #{categoryCode},
+            password = #{password},
+            updatedAt = NOW()
+        WHERE
+            id = ${id};
+    </update>
 
     <update id="updateViewCnt" parameterType="Long">
         UPDATE board
         SET viewCnt = viewCnt + 1
         WHERE id = #{id};
     </update>
+
+    <select id="categoryAll" resultType="category">
+        SELECT *
+        FROM category
+        WHERE useYn = 'Y';
+    </select>
+
+    <update id="remove" parameterType="Long">
+        UPDATE board
+        SET
+            useYn = 'N'
+        WHERE
+            id = ${id};
+    </update>
+
+    <insert id="saveFile" parameterType="attach">
+        INSERT INTO board_attach (boardId, originalFileName, storedFileName)
+        VALUES(#{id}, #{originalFileName}, #{storedFileName});
+    </insert>
 
 </mapper>

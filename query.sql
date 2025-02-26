@@ -20,6 +20,7 @@ CREATE TABLE board (
                        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP  -- 수정 시각
 );
 COMMIT;
+ALTER TABLE board MODIFY COLUMN id BIGINT AUTO_INCREMENT;
 
 SELECT * FROM board ORDER BY id DESC;
 SELECT *,DATE_FORMAT(createdAt, '%Y-%m-%d') AS createdDt  FROM board WHERE useYn != 'N';
@@ -32,7 +33,10 @@ SELECT id, title, content, writer, viewCnt, createdAt, updatedAt
 FROM board
 WHERE useYn = 'Y';
 
-SELECT * FROM board WHERE useYn != 1 AND createdAt BETWEEN '2024-02-16' AND '2025-02-28' AND (title LIKE CONCAT('%', 'Ja', '%') OR content LIKE CONCAT('%', 'Ja', '%') OR writer LIKE CONCAT('%', 'Ja', '%')) LIMIT 0,  10;
+SELECT * FROM board
+        WHERE useYn != 1
+        AND createdAt BETWEEN '2024-02-16' AND '2025-02-28' AND
+            (title LIKE CONCAT('%', 'Ja', '%') OR content LIKE CONCAT('%', 'Ja', '%') OR writer LIKE CONCAT('%', 'Ja', '%')) LIMIT 0,  10;
 
 UPDATE board SET viewCnt = viewCnt+1 WHERE id =1;
 
@@ -62,11 +66,16 @@ WHERE
 
 SELECT *
 FROM board
-WHERE useYn != 1
-  AND (title LIKE CONCAT('%', 'ht', '%')
-    OR content LIKE CONCAT('%', 'ht', '%')
-    OR writer LIKE CONCAT('%', 'ht', '%'));
+WHERE useYn = 'Y'
+  AND (title LIKE CONCAT('%', '', '%')
+    OR content LIKE CONCAT('%', '', '%')
+    OR writer LIKE CONCAT('%', '', '%'));
 
+UPDATE board
+SET
+    useYn = 'N'
+WHERE
+    id =3;
 
 DROP table category;
 CREATE TABLE category (
@@ -91,13 +100,13 @@ WHERE
 
 DROP table reply_board;
 CREATE TABLE reply_board (
-                             id INT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
-                             board_id INT,                      -- 게시판 ID
-                             content TEXT,                      -- 댓글 내용
-                             writer VARCHAR(100),               -- 작성자 이름
-                             is_hide VARCHAR(2) DEFAULT 0,      -- 삭제여부(0.show, 1.hide)
-                             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, -- 생성 시각
-                             updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP -- 수정 시각
+                         id INT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
+                         board_id INT,                      -- 게시판 ID
+                         content TEXT,                      -- 댓글 내용
+                         writer VARCHAR(100),               -- 작성자 이름
+                         is_hide VARCHAR(2) DEFAULT 0,      -- 삭제여부(0.show, 1.hide)
+                         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP, -- 생성 시각
+                         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP -- 수정 시각
 );
 
 INSERT INTO reply_board (board_id, content, writer, createdAt, updatedAt)
@@ -115,13 +124,22 @@ WHERE
 SELECT * FROM reply_board;
 
 
-CREATE TABLE attach (
-                        id INT AUTO_INCREMENT PRIMARY KEY, -- 첨부파일 ID
-                        board_id INT,                      -- 게시판 번호
-                        name TEXT,                         -- 파일 이름
-                        size TEXT,                         -- 파일 크기
-                        url TEXT                           -- 파일 경로
+CREATE TABLE board_binary_attach (
+                              id INT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
+                              boardId INT,                         -- 게시판 번호
+                              binaryData LONGTEXT,                 -- 파일 바이너리
+                              fileName TEXT                        -- 파일 이름
 );
-DROP table attach;
+
+CREATE TABLE board_attach (
+                        id INT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
+                        boardId INT,                         -- 게시판 번호
+                        originalFileName TEXT,               -- 파일 이름
+                        storedFileName TEXT                  -- 파일 이름
+);
+SELECT * FROM board_attach;
+INSERT INTO board_attach (boardId, originalFileName, storedFileName)
+VALUES();
+DROP table board_attach;
 
 commit;

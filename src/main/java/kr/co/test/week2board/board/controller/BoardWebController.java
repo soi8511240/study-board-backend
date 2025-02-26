@@ -1,6 +1,7 @@
 package kr.co.test.week2board.board.controller;
 
 import kr.co.test.week2board.board.dto.BoardDTO;
+import kr.co.test.week2board.board.dto.ListResponseDTO;
 import kr.co.test.week2board.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,35 +32,41 @@ public class BoardWebController {
     }
 
     @GetMapping("/save")
-    public String save(){
+    public String save(Model model){
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setCategory(boardService.categoryAll());
+        model.addAttribute("response", listResponseDTO);
+
         return "save";
     }
 
     /**
-     * 글 추가
-     * @param boardDTO
-     * @return
+     * 글 추가 API
      */
     @PostMapping("/save")
     public String save(BoardDTO boardDTO){
-        log.warn(boardDTO.toString());
 
-        boardService.boardSave(boardDTO);
+        try{
+            boardService.save(boardDTO);
+        }catch (Exception e){
+            log.error(e.getMessage());
+        }
 
-        return "list";
+        return "redirect:/board/list";
     }
 
     /**
      * 게시판 전체리스트
      * @param model
-     * @return
+     * listResponseDTO - 게시판 리스트, 카테고리 리스트
      */
     @GetMapping("/list")
     public String findAll(Model model){
-        List<BoardDTO> boardDTOList = boardService.findAll();
-        log.info(boardDTOList.toString());
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setBoard(boardService.findAll());
+        listResponseDTO.setCategory(boardService.categoryAll());
 
-        model.addAttribute("boardList", boardDTOList);
+        model.addAttribute("response", listResponseDTO);
 
         return "list";
     }
@@ -66,16 +75,64 @@ public class BoardWebController {
      * 게시판 - 상세
      * @param id
      * @param model
-     * @return
      */
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}")
     public String findById(@PathVariable("id") Long id, Model model){
+        // count 올리기
         boardService.updateViewCnt(id);
 
-        BoardDTO boardDTO = boardService.findById(id);
-        model.addAttribute("board", boardDTO);
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        boardDTOList.add(boardService.findById(id));
+
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setBoard(boardDTOList);
+
+        model.addAttribute("response", listResponseDTO);
 
         return "detail";
+    }
+
+    /**
+     * 게시판 - 수정
+     */
+    @GetMapping("/update/{id}")
+    public String updateById(@PathVariable("id") Long id, Model model){
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        boardDTOList.add(boardService.findById(id));
+
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setBoard(boardDTOList);
+        listResponseDTO.setCategory(boardService.categoryAll());
+
+        model.addAttribute("response", listResponseDTO);
+
+        return "update";
+    }
+
+    /**
+     * 게시판 - 수정
+     */
+    @PostMapping("/update/{id}")
+    public String updateById(BoardDTO boardDTO, Model model){
+        boardService.update(boardDTO);
+
+        Long id = boardDTO.getId();
+
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        boardDTOList.add(boardService.findById(id));
+
+        ListResponseDTO listResponseDTO = new ListResponseDTO();
+        listResponseDTO.setBoard(boardDTOList);
+
+        model.addAttribute("response", listResponseDTO);
+
+        return "detail";
+    }
+
+    public String deleteById(@PathVariable Long id){
+        boardService.delete(id);
+
+        return "redirect:/board/list";
     }
 
 

@@ -1,6 +1,8 @@
 package kr.co.test.week2board.board.repository;
 
+import kr.co.test.week2board.board.dto.AttachDTO;
 import kr.co.test.week2board.board.dto.BoardDTO;
+import kr.co.test.week2board.board.dto.CategoryDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -15,8 +17,8 @@ public class BoardRepository {
 
     private final SqlSessionTemplate sql;
 
-    public void save(BoardDTO boardDTO) {
-        sql.insert("Board.save", boardDTO);
+    public int save(BoardDTO boardDTO) {
+        return sql.insert("Board.save", boardDTO);
     }
 
     public List<BoardDTO> findAll() {
@@ -29,5 +31,21 @@ public class BoardRepository {
 
     public BoardDTO findById(Long id) {
         return sql.selectOne("Board.findById", id);
+    }
+
+    public List<CategoryDTO> categoryAll() {
+        return sql.selectList("Board.categoryAll");
+    }
+
+    public void update(BoardDTO boardDTO) {
+        sql.update("Board.update", boardDTO);
+    }
+
+    public void delete(Long id) {
+        sql.update("Board.remove", id);
+    }
+
+    public void saveFile(AttachDTO attachDTO) {
+        sql.insert("Board.saveFile", attachDTO);
     }
 }

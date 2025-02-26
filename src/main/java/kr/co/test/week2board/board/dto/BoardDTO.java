@@ -4,22 +4,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 public class BoardDTO {
-    private int id;
+    private Long id;
     private String title;
     private String content;
     private String writer;
     private String password;
     private String useYn;
-    private String attachYn;
     private String replyYn;
     private String createdAt;
     private String updatedAt;
-    private int viewCnt;
+    private Long viewCnt;
     private String categoryCode;
     private String categoryName;
+    private String attachYn;
+    private List<MultipartFile> attachFiles;
 }

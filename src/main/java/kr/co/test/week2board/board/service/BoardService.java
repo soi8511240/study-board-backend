@@ -1,11 +1,18 @@
 package kr.co.test.week2board.board.service;
 
+import kr.co.test.week2board.Constants;
+import kr.co.test.week2board.board.dto.AttachDTO;
 import kr.co.test.week2board.board.dto.BoardDTO;
+import kr.co.test.week2board.board.dto.CategoryDTO;
 import kr.co.test.week2board.board.repository.BoardRepository;
+import kr.co.test.week2board.board.util.BinaryAttach;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Slf4j
@@ -13,16 +20,39 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BinaryAttach binaryAttach;
 
-    public String boardSave(BoardDTO boardDTO) {
-        try{
-            boardRepository.save(boardDTO);
-        }catch (Exception e){
-            log.error(e.getMessage());
-            return "fail";
+    public Long save(BoardDTO boardDTO) throws IOException {
+        long id;
+        if (boardDTO.getAttachFiles().get(0).isEmpty()) {
+            log.info("첨부파일 없음");
+            // 첨부파일 없을 때
+            boardDTO.setAttachYn("N");
+            id = boardRepository.save(boardDTO);
+        }else{
+            log.info("첨부파일 있음");
+            // 첨부파일 있을 때
+            boardDTO.setAttachYn("Y");
+            id = boardRepository.save(boardDTO);
+
+            for (MultipartFile attachFile : boardDTO.getAttachFiles()){
+                String fileName = attachFile.getOriginalFilename();
+                String storeFileName = System.currentTimeMillis() + fileName;
+
+                AttachDTO attachDTO = new AttachDTO();
+                attachDTO.setOriginalFileName(fileName);
+                attachDTO.setStoredFileName(storeFileName);
+                attachDTO.setId(id);
+
+                // 첨부파일 경로
+                String filePath = Constants.IMAGE_PATH + storeFileName;
+                log.info(filePath);
+
+                attachFile.transferTo(new File(filePath));
+                boardRepository.saveFile(attachDTO);
+            }
         }
-
-        return "success";
+        return id;
     }
 
     public List<BoardDTO> findAll() {
@@ -35,5 +65,17 @@ public class BoardService {
 
     public BoardDTO findById(Long id) {
         return boardRepository.findById(id);
+    }
+
+    public List<CategoryDTO> categoryAll() {
+        return boardRepository.categoryAll();
+    }
+
+    public void update(BoardDTO boardDTO) {
+        boardRepository.update(boardDTO);
+    }
+
+    public void delete(Long id) {
+        boardRepository.delete(id);
     }
 }

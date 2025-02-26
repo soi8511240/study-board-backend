@@ -1,6 +1,6 @@
 package kr.co.test.week2board.codes.controller;
 
-import kr.co.test.week2board.codes.dto.CategoryDTO;
+import kr.co.test.week2board.codes.dto.CategoryDTO2;
 import kr.co.test.week2board.codes.service.CodesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +24,8 @@ public class ApiController {
         Map<String, Object> codes = new HashMap<>();
 
         try {
-            List<CategoryDTO> categoryDTOList = codesService.categoryAll();
-            codes.put("category", categoryDTOList);
+            List<CategoryDTO2> categoryDTO2List = codesService.categoryAll();
+            codes.put("category", categoryDTO2List);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

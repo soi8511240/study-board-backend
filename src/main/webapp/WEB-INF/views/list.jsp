@@ -10,6 +10,9 @@
         </div>
         <select class="select" name="categorySelect">
             <option value="">전체</option>
+            <c:forEach items="${response.category}" var="item">
+                <option value="${item.id}">${item.name}</option>
+            </c:forEach>
         </select>
         <input type="text" id="keyword" placeholder="검색어를 입력해 주세요. (제목 + 작성자 + 내용)" value="" />
         <button id="sr-button" class="btn-sr" type="button">검색</button>
@@ -27,11 +30,11 @@ const initSearchBar = async ()=> {
         .datepicker({dateFormat: DATE_FORMAT});
 
     /* category Select */
-    const $select = document.querySelector('#categorySelect');
-    const categories = await getCodes('category');
-    categories.forEach(item => {
-        $select.append(new Option(item.name, item.id, false, false));
-    })
+    // const $select = document.querySelector('#categorySelect');
+    // const categories = await getCodes('category');
+    // categories.forEach(item => {
+    //     $select.append(new Option(item.name, item.id, false, false));
+    // })
 
     /* button */
     document.querySelector('#sr-button').addEventListener('click', goSearch);
@@ -76,19 +79,25 @@ initSearchBar();
     </tr>
     </thead>
     <tbody>
-    <c:if test="${empty boardList}">
+    <c:if test="${empty response.board}">
         <tr>
-            <td colspan="6">데이터가 없습니다.</td>
+            <td colspan="6" style="height:200px">데이터가 없습니다.</td>
         </tr>
     </c:if>
-    <c:forEach items="${boardList}" var="board">
+    <c:forEach items="${response.board}" var="item">
         <tr>
-            <td>${board.categoryName}</td>
-            <td><a href="/detail/${board.id}">${board.title}</a></td>
-            <td>${board.writer}</td>
-            <td>${board.viewCnt}</td>
-            <td>${board.createdAt}</td>
-            <td>${board.updatedAt}</td>
+            <td>${item.categoryName}</td>
+            <td>
+                <a href="${item.id}">${item.title}</a>
+<%--                    ${item.attachYn}--%>
+                <c:if test="${item.attachYn == 'Y'}">
+                    <i class="ico attach"></i>
+                </c:if>
+            </td>
+            <td>${item.writer}</td>
+            <td>${item.viewCnt}</td>
+            <td>${item.createdAt}</td>
+            <td>${item.updatedAt}</td>
         </tr>
     </c:forEach>
     </tbody>

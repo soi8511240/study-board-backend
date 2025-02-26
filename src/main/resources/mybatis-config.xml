@@ -3,7 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="kr.co.test.week2board.board.dto.BoardDTO" alias="board"/>
-        <typeAlias type="kr.co.test.week2board.codes.dto.CategoryDTO" alias="category"/>
+        <typeAlias type="kr.co.test.week2board.board.dto.BoardDTO" alias="board" />
+        <typeAlias type="kr.co.test.week2board.board.dto.CategoryDTO" alias="category" />
+        <typeAlias type="kr.co.test.week2board.board.dto.AttachDTO" alias="attach" />
     </typeAliases>
 </configuration>
