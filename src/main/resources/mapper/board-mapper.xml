@@ -3,17 +3,57 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+
     <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO board (title, content, writer, password, attachYn, categoryCode)
         VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
     </insert>
 
-    <select id="findAll" resultType="board">
-        SELECT b.*, c.name AS categoryName
+<!--    <resultMap id="BoardResponseMap" type="boardResponse">-->
+<!--        <result column="totalCnt" property="totalCnt" javaType="Long" />-->
+<!--&lt;!&ndash;        <association property="paging" javaType="paging" />&ndash;&gt;-->
+<!--        <collection property="board" ofType="board" />-->
+<!--        <collection property="category" ofType="category" />-->
+<!--        <collection property="filter" ofType="searchFilter" />-->
+<!--    </resultMap>-->
+
+    <select id="countBoards" resultType="Long" parameterType="searchFilter">
+        SELECT COUNT(*) as totalCount
+        FROM board
+        WHERE useYn = 'Y'
+          AND createdAt BETWEEN CONCAT(#{fromDt}, ' 00:00:00') AND CONCAT(#{toDt}, ' 23:59:59')
+        <if test="categoryId != null and categoryId != ''">
+          AND categoryCode = #{categoryId}
+        </if>
+        <if test="keyword != null and keyword != ''">
+          AND (
+            title LIKE CONCAT('%', #{keyword}, '%') OR
+            content LIKE CONCAT('%', #{keyword}, '%') OR
+            writer LIKE CONCAT('%', #{keyword}, '%')
+          )
+        </if>
+    </select>
+
+    <select id="findAll" resultType="board" parameterType="searchFilter">
+        SELECT b.*,
+               c.name AS categoryName
         FROM board b
                  LEFT JOIN category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
-        ORDER BY b.id DESC;
+          AND b.createdAt BETWEEN CONCAT(#{fromDt}, ' 00:00:00') AND CONCAT(#{toDt}, ' 23:59:59')
+        <if test="categoryId != null and categoryId != ''">
+          AND b.categoryCode = #{categoryId}
+        </if>
+
+        <if test="keyword != null and keyword != ''">
+          AND (
+            b.title LIKE CONCAT('%', #{keyword}, '%') OR
+            b.content LIKE CONCAT('%', #{keyword}, '%') OR
+            b.writer LIKE CONCAT('%', #{keyword}, '%')
+          )
+        </if>
+        ORDER BY b.id DESC
+        LIMIT #{offset}, #{fetchCnt}
     </select>
 
     <select id="findById" parameterType="Long" resultType="board">

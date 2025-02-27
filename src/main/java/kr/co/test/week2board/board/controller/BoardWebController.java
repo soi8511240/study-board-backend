@@ -1,7 +1,8 @@
 package kr.co.test.week2board.board.controller;
 
 import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.ListResponseDTO;
+import kr.co.test.week2board.board.dto.SearchFilterDTO;
+import kr.co.test.week2board.board.dto.BoardResponseDTO;
 import kr.co.test.week2board.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,9 @@ public class BoardWebController {
 
     @GetMapping("/save")
     public String save(Model model){
-        ListResponseDTO listResponseDTO = new ListResponseDTO();
-        listResponseDTO.setCategory(boardService.categoryAll());
-        model.addAttribute("response", listResponseDTO);
+        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        boardResponseDTO.setCategory(boardService.categoryAll());
+        model.addAttribute("response", boardResponseDTO);
 
         return "save";
     }
@@ -61,12 +61,16 @@ public class BoardWebController {
      * listResponseDTO - 게시판 리스트, 카테고리 리스트
      */
     @GetMapping("/list")
-    public String findAll(Model model){
-        ListResponseDTO listResponseDTO = new ListResponseDTO();
-        listResponseDTO.setBoard(boardService.findAll());
-        listResponseDTO.setCategory(boardService.categoryAll());
+    public String findAll(SearchFilterDTO searchFilterDTO, Model model){
+        SearchFilterDTO filters = new SearchFilterDTO(searchFilterDTO);
 
-        model.addAttribute("response", listResponseDTO);
+        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        boardResponseDTO.setTotalCnt(boardService.countBoards(filters));
+        boardResponseDTO.setBoard(boardService.findAll(filters));
+        boardResponseDTO.setCategory(boardService.categoryAll());
+        boardResponseDTO.setSearch(filters);
+
+        model.addAttribute("response", boardResponseDTO);
 
         return "list";
     }
@@ -84,10 +88,10 @@ public class BoardWebController {
         List<BoardDTO> boardDTOList = new ArrayList<>();
         boardDTOList.add(boardService.findById(id));
 
-        ListResponseDTO listResponseDTO = new ListResponseDTO();
-        listResponseDTO.setBoard(boardDTOList);
+        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        boardResponseDTO.setBoard(boardDTOList);
 
-        model.addAttribute("response", listResponseDTO);
+        model.addAttribute("response", boardResponseDTO);
 
         return "detail";
     }
@@ -100,11 +104,11 @@ public class BoardWebController {
         List<BoardDTO> boardDTOList = new ArrayList<>();
         boardDTOList.add(boardService.findById(id));
 
-        ListResponseDTO listResponseDTO = new ListResponseDTO();
-        listResponseDTO.setBoard(boardDTOList);
-        listResponseDTO.setCategory(boardService.categoryAll());
+        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        boardResponseDTO.setBoard(boardDTOList);
+        boardResponseDTO.setCategory(boardService.categoryAll());
 
-        model.addAttribute("response", listResponseDTO);
+        model.addAttribute("response", boardResponseDTO);
 
         return "update";
     }
@@ -121,10 +125,10 @@ public class BoardWebController {
         List<BoardDTO> boardDTOList = new ArrayList<>();
         boardDTOList.add(boardService.findById(id));
 
-        ListResponseDTO listResponseDTO = new ListResponseDTO();
-        listResponseDTO.setBoard(boardDTOList);
+        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        boardResponseDTO.setBoard(boardDTOList);
 
-        model.addAttribute("response", listResponseDTO);
+        model.addAttribute("response", boardResponseDTO);
 
         return "detail";
     }

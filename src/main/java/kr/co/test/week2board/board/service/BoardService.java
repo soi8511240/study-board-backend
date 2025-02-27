@@ -4,6 +4,7 @@ import kr.co.test.week2board.Constants;
 import kr.co.test.week2board.board.dto.AttachDTO;
 import kr.co.test.week2board.board.dto.BoardDTO;
 import kr.co.test.week2board.board.dto.CategoryDTO;
+import kr.co.test.week2board.board.dto.SearchFilterDTO;
 import kr.co.test.week2board.board.repository.BoardRepository;
 import kr.co.test.week2board.board.util.BinaryAttach;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +56,8 @@ public class BoardService {
         return id;
     }
 
-    public List<BoardDTO> findAll() {
-        return boardRepository.findAll();
+    public List<BoardDTO> findAll(SearchFilterDTO searchFilterDTO) {
+        return boardRepository.findAll(searchFilterDTO);
     }
 
     public void updateViewCnt(Long id) {
@@ -77,5 +78,9 @@ public class BoardService {
 
     public void delete(Long id) {
         boardRepository.delete(id);
+    }
+
+    public Long countBoards(SearchFilterDTO filters) {
+        return boardRepository.countBoards(filters);
     }
 }

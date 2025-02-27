@@ -2,9 +2,19 @@
 <!DOCTYPE configuration PUBLIC "//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+
+    <settings>
+        <setting name="logImpl" value="org.apache.ibatis.logging.stdout.StdOutImpl" />
+    </settings>
+
     <typeAliases>
         <typeAlias type="kr.co.test.week2board.board.dto.BoardDTO" alias="board" />
         <typeAlias type="kr.co.test.week2board.board.dto.CategoryDTO" alias="category" />
         <typeAlias type="kr.co.test.week2board.board.dto.AttachDTO" alias="attach" />
+        <typeAlias type="kr.co.test.week2board.board.dto.SearchFilterDTO" alias="searchFilter" />
+
+        <typeAlias type="kr.co.test.week2board.board.dto.BoardResponseDTO" alias="boardResponse" />
     </typeAliases>
+
+
 </configuration>

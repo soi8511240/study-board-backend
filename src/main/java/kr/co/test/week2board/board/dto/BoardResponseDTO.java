@@ -9,7 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class ListResponseDTO {
+public class BoardResponseDTO {
+    private Long totalCnt;
+    private int currentPage;
+
+    private SearchFilterDTO search;
+
     private List<BoardDTO> board;
     private List<CategoryDTO> category;
+    private List<SearchFilterDTO> filter;
 }

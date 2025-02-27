@@ -3,6 +3,7 @@ package kr.co.test.week2board.board.repository;
 import kr.co.test.week2board.board.dto.AttachDTO;
 import kr.co.test.week2board.board.dto.BoardDTO;
 import kr.co.test.week2board.board.dto.CategoryDTO;
+import kr.co.test.week2board.board.dto.SearchFilterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,8 +22,8 @@ public class BoardRepository {
         return sql.insert("Board.save", boardDTO);
     }
 
-    public List<BoardDTO> findAll() {
-        return sql.selectList("Board.findAll");
+    public List<BoardDTO> findAll(SearchFilterDTO searchFilterDTO) {
+        return sql.selectList("Board.findAll", searchFilterDTO);
     }
 
     public void updateViewCnt(Long id) {
@@ -47,5 +48,9 @@ public class BoardRepository {
 
     public void saveFile(AttachDTO attachDTO) {
         sql.insert("Board.saveFile", attachDTO);
+    }
+
+    public Long countBoards(SearchFilterDTO filters) {
+        return sql.selectOne("Board.countBoards", filters);
     }
 }
