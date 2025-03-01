@@ -39,4 +39,6 @@ public class SearchFilterDTO {
         this.offset = (currentPage-1) * fetchCnt;
     }
 
+
+
 }

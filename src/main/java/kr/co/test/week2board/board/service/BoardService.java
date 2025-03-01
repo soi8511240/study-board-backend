@@ -24,7 +24,7 @@ public class BoardService {
     private final BinaryAttach binaryAttach;
 
     public Long save(BoardDTO boardDTO) throws IOException {
-        long id;
+        long id; // sql result 카운터
         if (boardDTO.getAttachFiles().get(0).isEmpty()) {
             log.info("첨부파일 없음");
             // 첨부파일 없을 때
@@ -36,14 +36,15 @@ public class BoardService {
             boardDTO.setAttachYn("Y");
             id = boardRepository.save(boardDTO);
 
+            log.info("log key:{}",boardDTO);
             for (MultipartFile attachFile : boardDTO.getAttachFiles()){
                 String fileName = attachFile.getOriginalFilename();
-                String storeFileName = System.currentTimeMillis() + fileName;
+                String storeFileName = System.currentTimeMillis() + fileName; // Todo: 더 다양한 케이스 ,uuid 추천
 
                 AttachDTO attachDTO = new AttachDTO();
                 attachDTO.setOriginalFileName(fileName);
                 attachDTO.setStoredFileName(storeFileName);
-                attachDTO.setId(id);
+                attachDTO.setBoardId(boardDTO.getId());
 
                 // 첨부파일 경로
                 String filePath = Constants.IMAGE_PATH + storeFileName;
@@ -82,5 +83,13 @@ public class BoardService {
 
     public Long countBoards(SearchFilterDTO filters) {
         return boardRepository.countBoards(filters);
+    }
+
+    public List<AttachDTO> getAttachList(Long id) {
+        return boardRepository.getAttachList(id);
+    }
+
+    public AttachDTO attachById(String uuid) {
+        return boardRepository.attachById(uuid);
     }
 }

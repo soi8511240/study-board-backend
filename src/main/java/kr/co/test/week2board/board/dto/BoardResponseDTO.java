@@ -18,4 +18,5 @@ public class BoardResponseDTO {
     private List<BoardDTO> board;
     private List<CategoryDTO> category;
     private List<SearchFilterDTO> filter;
+    private List<AttachDTO> attach;
 }

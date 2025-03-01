@@ -53,4 +53,12 @@ public class BoardRepository {
     public Long countBoards(SearchFilterDTO filters) {
         return sql.selectOne("Board.countBoards", filters);
     }
+
+    public List<AttachDTO> getAttachList(Long id) {
+        return sql.selectList("Board.attachAll", id);
+    }
+
+    public AttachDTO attachById(String uuid) {
+        return sql.selectOne("Board.attachById", uuid);
+    }
 }

@@ -171,7 +171,7 @@ initSearchBar();
 
 <div class="btns-foot">
     <div class="left"></div>
-    <c:if test="${response.totalCnt != null}">
+    <c:if test="${not empty response.board}">
     <div class="paging-area">
         <button class="first">&lt;&lt;</button>
         <button class="prev">&lt;</button>
@@ -197,7 +197,7 @@ initSearchBar();
 <script type="text/javascript">
 const btns = document.querySelectorAll('.paging-area button');
 const currentPage = ${response.search.currentPage};
-const totalListCnt = ${pageCnt};
+const totalListCnt = Math.trunc(${pageCnt});
 console.log('currentPage',currentPage);
 console.log('totalListCnt',totalListCnt);
 btns.forEach(btn => {

@@ -41,7 +41,13 @@
         <div class="left"></div>
         <div class="center">
             <button type="submit" class="btn btn-default primary">등록</button>
-            <button class="btn btn-default">취소</button>
+            <button type="button" class="btn btn-default" id="btn-back">취소</button>
+            <script type="text/javascript">
+                document.getElementById("btn-back").onclick = function(e){
+                    e.preventDefault();
+                    history.back();
+                }
+            </script>
         </div>
         <div class="right"></div>
     </div>

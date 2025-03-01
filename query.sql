@@ -138,8 +138,8 @@ WHERE
 
 DROP table reply_board;
 CREATE TABLE reply_board (
-                         id INT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
-                         board_id INT,                      -- 게시판 ID
+                         id BIGINT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
+                         board_id BIGINT,                      -- 게시판 ID
                          content TEXT,                      -- 댓글 내용
                          writer VARCHAR(100),               -- 작성자 이름
                          is_hide VARCHAR(2) DEFAULT 0,      -- 삭제여부(0.show, 1.hide)
@@ -163,18 +163,22 @@ SELECT * FROM reply_board;
 
 
 CREATE TABLE board_binary_attach (
-                              id INT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
-                              boardId INT,                         -- 게시판 번호
+                              id BIGINT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
+                              boardId BIGINT,                         -- 게시판 번호
                               binaryData LONGTEXT,                 -- 파일 바이너리
                               fileName TEXT                        -- 파일 이름
 );
 
 CREATE TABLE board_attach (
-                        id INT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
-                        boardId INT,                         -- 게시판 번호
-                        originalFileName TEXT,               -- 파일 이름
-                        storedFileName TEXT                  -- 파일 이름
+                        id BIGINT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
+                        boardId BIGINT,                         -- 게시판 번호
+                        originalFileName TEXT,                  -- 파일 이름
+                        storedFileName TEXT,                    -- 파일 이름
+                        useYn CHAR(1) DEFAULT 'Y'               -- 사용 여부 (Y: 사용, N: 미사용)
+
 );
+
+COMMIT;
 SELECT * FROM board_attach;
 INSERT INTO board_attach (boardId, originalFileName, storedFileName)
 VALUES();

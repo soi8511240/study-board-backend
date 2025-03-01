@@ -9,7 +9,16 @@
     <tr><th>Content</th><td> ${item.content} </td></tr>
     <tr><th>Writer</th><td> ${item.writer} </td></tr>
     <tr><th>Count</th><td> ${item.viewCnt} </td></tr>
-    <tr><th>AttachFiles</th><td> ${item.attachFiles} </td></tr>
+    <c:if test="${not empty response.attach}">
+    <tr>
+        <th>AttachFiles</th>
+        <td>
+        <c:forEach items="${response.attach}" var="attachItem">
+             <div>${attachItem.storedFileName}</div>
+        </c:forEach>
+        </td>
+    </tr>
+    </c:if>
     <tr><th>CreateDate</th><td> ${item.createdAt} </td></tr>
     <tr><th>UpdateDate</th><td> ${item.updatedAt} </td></tr>
 </table>
