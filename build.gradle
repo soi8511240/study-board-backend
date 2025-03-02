@@ -41,6 +41,20 @@ dependencies {
     implementation 'jakarta.servlet:jakarta.servlet-api'
     implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
     implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+
+    /* map struct */
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
+    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct-processor
+    testAnnotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+    // https://mvnrepository.com/artifact/org.mapstruct/mapstruct
+    implementation("org.mapstruct:mapstruct:1.5.3.Final")
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok-mapstruct-binding
+    implementation("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+
 }
 
 tasks.named('test') {

@@ -1,6 +1,5 @@
-package kr.co.test.week2board.board.dto;
+package kr.co.test.week2board.board.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

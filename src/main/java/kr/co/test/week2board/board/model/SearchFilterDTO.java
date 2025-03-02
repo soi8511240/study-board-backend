@@ -1,4 +1,4 @@
-package kr.co.test.week2board.board.dto;
+package kr.co.test.week2board.board.model;
 
 import kr.co.test.week2board.Constants;
 import kr.co.test.week2board.board.util.CommonUtil;

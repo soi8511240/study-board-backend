@@ -1,7 +1,7 @@
 package kr.co.test.week2board.board.controller;
 
-import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.SearchFilterDTO;
+import kr.co.test.week2board.board.model.BoardDTO;
+import kr.co.test.week2board.board.model.SearchFilterDTO;
 import kr.co.test.week2board.board.service.ModuleServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

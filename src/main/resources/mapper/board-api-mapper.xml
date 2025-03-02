@@ -2,58 +2,78 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Board">
+<mapper namespace="BoardApi">
 
     <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_board (title, content, writer, password, attachYn, categoryCode)
         VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
     </insert>
 
-<!--    <resultMap id="BoardResponseMap" type="boardResponse">-->
-<!--        <result column="totalCnt" property="totalCnt" javaType="Long" />-->
-<!--&lt;!&ndash;        <association property="paging" javaType="paging" />&ndash;&gt;-->
-<!--        <collection property="board" ofType="board" />-->
-<!--        <collection property="category" ofType="category" />-->
-<!--        <collection property="filter" ofType="searchFilter" />-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="BoardResponseMap" type="boardResponse">-->
+    <!--        <result column="totalCnt" property="totalCnt" javaType="Long" />-->
+    <!--&lt;!&ndash;        <association property="paging" javaType="paging" />&ndash;&gt;-->
+    <!--        <collection property="board" ofType="board" />-->
+    <!--        <collection property="category" ofType="category" />-->
+    <!--        <collection property="filter" ofType="searchFilter" />-->
+    <!--    </resultMap>-->
 
-    <select id="countBoards" resultType="Long" parameterType="searchFilter">
+    <select id="countBoards" resultType="Long" parameterType="listRequest">
         SELECT COUNT(*) as totalCount
         FROM board
         WHERE useYn = 'Y'
-          AND createdAt BETWEEN CONCAT(#{fromDt}, ' 00:00:00') AND CONCAT(#{toDt}, ' 23:59:59')
+        <if test="fromDt != null and fromDt != ''">
+            AND b.createdAt &gt;= CONCAT(#{fromDt}, '00:00:00')
+        </if>
+        <if test="toDt != null and toDt != ''">
+            AND b.createdAt &lt;= CONCAT(#{toDt}, ' 23:59:59')
+        </if>
         <if test="categoryId != null and categoryId != ''">
-          AND categoryCode = #{categoryId}
+            AND categoryCode = #{categoryId}
         </if>
         <if test="keyword != null and keyword != ''">
-          AND (
+            AND (
             title LIKE CONCAT('%', #{keyword}, '%') OR
             content LIKE CONCAT('%', #{keyword}, '%') OR
             writer LIKE CONCAT('%', #{keyword}, '%')
-          )
+            )
         </if>
     </select>
 
-    <select id="findAll" resultType="board" parameterType="searchFilter">
+    <select id="findAll" resultType="listResponse" parameterType="listRequest">
         SELECT b.*,
-               c.name AS categoryName
+        c.name AS categoryName
         FROM tb_board b
-                 LEFT JOIN tb_category c ON b.categoryCode = c.id
+        LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
-          AND b.createdAt BETWEEN CONCAT(#{fromDt}, ' 00:00:00') AND CONCAT(#{toDt}, ' 23:59:59')
+
+        <if test="fromDt != null and fromDt != ''">
+            AND b.createdAt &gt;= CONCAT(#{fromDt}, '00:00:00')
+        </if>
+
+        <if test="toDt != null and toDt != ''">
+            AND b.createdAt &lt;= CONCAT(#{toDt}, ' 23:59:59')
+        </if>
+
         <if test="categoryId != null and categoryId != ''">
-          AND b.categoryCode = #{categoryId}
+            AND b.categoryCode = #{categoryId}
         </if>
 
         <if test="keyword != null and keyword != ''">
-          AND (
+            AND (
             b.title LIKE CONCAT('%', #{keyword}, '%') OR
             b.content LIKE CONCAT('%', #{keyword}, '%') OR
             b.writer LIKE CONCAT('%', #{keyword}, '%')
-          )
+            )
         </if>
         ORDER BY b.id DESC
-        LIMIT #{offset}, #{fetchCnt}
+        <choose>
+            <when test="currentPage != null and currentPage != ''">
+                LIMIT (#{currentPage} - 1) * #{fetchCnt}, #{fetchCnt}
+            </when>
+            <otherwise>
+                LIMIT 0, #{fetchCnt}
+            </otherwise>
+        </choose>
     </select>
 
     <select id="findById" parameterType="Long" resultType="board">
@@ -61,7 +81,7 @@
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
-        AND b.id = #{id}
+          AND b.id = #{id}
         ORDER BY b.id DESC;
     </select>
 

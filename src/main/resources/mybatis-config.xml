@@ -8,12 +8,15 @@
     </settings>
 
     <typeAliases>
-        <typeAlias type="kr.co.test.week2board.board.dto.BoardDTO" alias="board" />
-        <typeAlias type="kr.co.test.week2board.board.dto.CategoryDTO" alias="category" />
-        <typeAlias type="kr.co.test.week2board.board.dto.AttachDTO" alias="attach" />
-        <typeAlias type="kr.co.test.week2board.board.dto.SearchFilterDTO" alias="searchFilter" />
+        <typeAlias type="kr.co.test.week2board.board.model.BoardDTO" alias="board" />
+        <typeAlias type="kr.co.test.week2board.board.model.CategoryDTO" alias="category" />
+        <typeAlias type="kr.co.test.week2board.board.model.AttachDTO" alias="attach" />
+        <typeAlias type="kr.co.test.week2board.board.model.SearchFilterDTO" alias="searchFilter" />
 
-        <typeAlias type="kr.co.test.week2board.board.dto.BoardResponseDTO" alias="boardResponse" />
+        <typeAlias type="kr.co.test.week2board.board.model.BoardResponseDTO" alias="boardResponse" />
+
+        <typeAlias type="kr.co.test.week2board.board.model.ListResponseVO" alias="listResponse" />
+        <typeAlias type="kr.co.test.week2board.board.model.ListRequestDTO" alias="listRequest" />
     </typeAliases>
 
 

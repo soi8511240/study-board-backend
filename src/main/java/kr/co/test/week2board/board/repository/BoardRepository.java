@@ -1,9 +1,9 @@
 package kr.co.test.week2board.board.repository;
 
-import kr.co.test.week2board.board.dto.AttachDTO;
-import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.CategoryDTO;
-import kr.co.test.week2board.board.dto.SearchFilterDTO;
+import kr.co.test.week2board.board.model.AttachDTO;
+import kr.co.test.week2board.board.model.BoardDTO;
+import kr.co.test.week2board.board.model.CategoryDTO;
+import kr.co.test.week2board.board.model.SearchFilterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;

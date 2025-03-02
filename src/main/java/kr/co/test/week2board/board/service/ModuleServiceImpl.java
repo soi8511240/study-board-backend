@@ -1,35 +1,26 @@
 package kr.co.test.week2board.board.service;
 
-import jakarta.annotation.Resource;
-import kr.co.test.week2board.Constants;
-import kr.co.test.week2board.board.dto.AttachDTO;
-import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.BoardResponseDTO;
-import kr.co.test.week2board.board.dto.SearchFilterDTO;
+import kr.co.test.week2board.board.model.BoardDTO;
+import kr.co.test.week2board.board.model.BoardResponseDTO;
+import kr.co.test.week2board.board.model.SearchFilterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.util.UriUtils;
 
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ModuleServiceImpl implements ModuleService {
+public class ModuleServiceImpl {
     private final BoardService boardService;
 
     /**
      * 저장 api
      * @return 게시글 id
      */
-    @Override
     public long save(BoardDTO boardDTO) {
         long id = 0;
         try {
@@ -44,7 +35,6 @@ public class ModuleServiceImpl implements ModuleService {
      * 등록 페이지 
      * @return categoryList
      */
-    @Override
     public BoardResponseDTO loadSaveData() {
         BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
         try {
@@ -60,7 +50,6 @@ public class ModuleServiceImpl implements ModuleService {
      * 글목록
      * @return BoardResponseDTO
      */
-    @Override
     public BoardResponseDTO list(SearchFilterDTO searchFilter) {
 
         SearchFilterDTO filters = new SearchFilterDTO(searchFilter);
@@ -80,7 +69,6 @@ public class ModuleServiceImpl implements ModuleService {
         return boardResponseDTO;
     }
 
-    @Override
     public BoardResponseDTO findById(Long id) {
         try {
             boardService.updateViewCnt(id); // 조회수 증가
@@ -91,7 +79,6 @@ public class ModuleServiceImpl implements ModuleService {
         }
     }
 
-    @Override
     public BoardResponseDTO loadUpdateData(Long id) {
         try {
             return wrapBoardResponseWithCategory(boardService.findById(id), true);
@@ -101,7 +88,6 @@ public class ModuleServiceImpl implements ModuleService {
         return null;
     }
 
-    @Override
     public BoardResponseDTO updateById(BoardDTO boardDTO) {
         List<BoardDTO> boardDTOList = new ArrayList<>();
         BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
@@ -120,7 +106,6 @@ public class ModuleServiceImpl implements ModuleService {
         return boardResponseDTO;
     }
 
-    @Override
     public void delete(Long id) {
         boardService.delete(id);
     }

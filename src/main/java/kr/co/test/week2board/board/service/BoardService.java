@@ -1,10 +1,8 @@
 package kr.co.test.week2board.board.service;
 
 import kr.co.test.week2board.Constants;
-import kr.co.test.week2board.board.dto.AttachDTO;
-import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.CategoryDTO;
-import kr.co.test.week2board.board.dto.SearchFilterDTO;
+import kr.co.test.week2board.board.model.*;
+import kr.co.test.week2board.board.repository.BoardApiRepository;
 import kr.co.test.week2board.board.repository.BoardRepository;
 import kr.co.test.week2board.board.util.BinaryAttach;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardApiRepository boardApiRepository;
     private final BinaryAttach binaryAttach;
 
     public Long save(BoardDTO boardDTO) throws IOException {
@@ -91,5 +90,9 @@ public class BoardService {
 
     public AttachDTO attachById(String uuid) {
         return boardRepository.attachById(uuid);
+    }
+
+    public List<ListResponseVO> listAll(ListRequestDTO listRequest) {
+        return boardApiRepository.findAll(listRequest);
     }
 }

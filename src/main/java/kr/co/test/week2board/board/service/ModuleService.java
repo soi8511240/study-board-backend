@@ -1,19 +1,25 @@
 package kr.co.test.week2board.board.service;
 
-import jakarta.annotation.Resource;
-import kr.co.test.week2board.board.dto.BoardDTO;
-import kr.co.test.week2board.board.dto.BoardResponseDTO;
-import kr.co.test.week2board.board.dto.SearchFilterDTO;
-import org.springframework.http.ResponseEntity;
+import kr.co.test.week2board.Constants;
+import kr.co.test.week2board.board.model.ListRequestDTO;
+import kr.co.test.week2board.board.model.ListResponseVO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-public interface ModuleService {
-    long             save(BoardDTO boardDTO);
-    void             delete(Long id);
-    BoardResponseDTO loadSaveData();
-    BoardResponseDTO list(SearchFilterDTO searchFilter);
-    BoardResponseDTO findById(Long id);
-    BoardResponseDTO loadUpdateData(Long id);
-    BoardResponseDTO updateById(BoardDTO boardDTO);
+import java.util.List;
 
-//    ResponseEntity<Resource> attachById(String uuid);
+@Service
+@RequiredArgsConstructor
+public class ModuleService {
+
+    private final BoardService boardService;
+
+    /**
+     * 게시판 리스트
+     * @param listRequest
+     * @return
+     */
+    public List<ListResponseVO> listAll(ListRequestDTO listRequest) {
+        return boardService.listAll(listRequest);
+    }
 }

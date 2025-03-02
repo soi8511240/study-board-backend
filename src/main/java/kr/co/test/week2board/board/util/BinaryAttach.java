@@ -1,9 +1,7 @@
 package kr.co.test.week2board.board.util;
 
-import kr.co.test.week2board.board.dto.AttachDTO;
+import kr.co.test.week2board.board.model.AttachDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.Base64;
 
 @Service
 public class BinaryAttach {
