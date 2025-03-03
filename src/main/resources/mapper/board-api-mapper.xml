@@ -17,7 +17,7 @@
     <!--        <collection property="filter" ofType="searchFilter" />-->
     <!--    </resultMap>-->
 
-    <select id="countBoards" resultType="Long" parameterType="listRequest">
+    <select id="countBoards" resultType="Long" parameterType="listEntity">
         SELECT COUNT(*) as totalCount
         FROM board
         WHERE useYn = 'Y'
@@ -39,7 +39,7 @@
         </if>
     </select>
 
-    <select id="findAll" resultType="listResponse" parameterType="listRequest">
+    <select id="findAll" resultType="listResponse" parameterType="listEntity">
         SELECT b.*,
         c.name AS categoryName
         FROM tb_board b

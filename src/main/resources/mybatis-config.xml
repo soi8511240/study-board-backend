@@ -17,6 +17,7 @@
 
         <typeAlias type="kr.co.test.week2board.board.model.ListResponseVO" alias="listResponse" />
         <typeAlias type="kr.co.test.week2board.board.model.ListRequestDTO" alias="listRequest" />
+        <typeAlias type="kr.co.test.week2board.board.model.ListEntity" alias="listEntity" />
     </typeAliases>
 
 

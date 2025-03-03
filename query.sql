@@ -4,7 +4,8 @@ use ebrainsoft_study;
 
 show tables;
 
-DROP table tb_board;
+# DROP table board;
+# DROP table tb_board;
 CREATE TABLE tb_board (
                        id BIGINT AUTO_INCREMENT PRIMARY KEY,       -- 게시글 고유 ID
                        title VARCHAR(255) NOT NULL,             -- 게시글 제목
@@ -111,7 +112,9 @@ SET
 WHERE
     id =3;
 
-DROP table tb_category;
+## category table
+# DROP table category;
+# DROP table tb_category;
 CREATE TABLE tb_category (
                        id INT AUTO_INCREMENT PRIMARY KEY,       -- 카테고리 고유 ID
                        name TEXT,                               -- 카테고리 이름
@@ -157,8 +160,8 @@ SET
 WHERE
     id != '0';
 
-DROP table reply_board;
-CREATE TABLE reply_board (
+DROP table tb_reply_board;
+CREATE TABLE tb_reply_board (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
                          board_id BIGINT,                      -- 게시판 ID
                          content TEXT,                      -- 댓글 내용
@@ -168,19 +171,19 @@ CREATE TABLE reply_board (
                          updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP -- 수정 시각
 );
 
-INSERT INTO reply_board (board_id, content, writer, createdAt, updatedAt)
+INSERT INTO tb_reply_board (board_id, content, writer, createdAt, updatedAt)
 VALUES( 1,'댓글1-1', '', NOW(), NOW());
-INSERT INTO reply_board (board_id, content, writer, createdAt, updatedAt)
+INSERT INTO tb_reply_board (board_id, content, writer, createdAt, updatedAt)
 VALUES( 2,'댓글2-1', '', NOW(), NOW());
 
-UPDATE reply_board
+UPDATE tb_reply_board
 SET
     content = '수정된 댓글111',
     updatedAt = NOW()
 WHERE
     id = 1;
 
-SELECT * FROM reply_board;
+SELECT * FROM tb_reply_board;
 
 
 CREATE TABLE board_binary_attach (

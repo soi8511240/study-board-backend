@@ -1,6 +1,7 @@
 package kr.co.test.week2board.board.repository;
 
 
+import kr.co.test.week2board.board.model.ListEntity;
 import kr.co.test.week2board.board.model.ListRequestDTO;
 import kr.co.test.week2board.board.model.ListResponseVO;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ public class BoardApiRepository {
 
     private final SqlSessionTemplate sql;
 
-    public List<ListResponseVO> findAll(ListRequestDTO listRequest) {
-        return sql.selectList("BoardApi.findAll", listRequest);
+    public List<ListResponseVO> findAll(ListEntity listEntity) {
+        return sql.selectList("BoardApi.findAll", listEntity);
     }
 }

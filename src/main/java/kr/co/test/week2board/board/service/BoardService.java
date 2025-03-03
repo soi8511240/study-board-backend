@@ -92,7 +92,7 @@ public class BoardService {
         return boardRepository.attachById(uuid);
     }
 
-    public List<ListResponseVO> listAll(ListRequestDTO listRequest) {
-        return boardApiRepository.findAll(listRequest);
+    public List<ListResponseVO> listAll(ListEntity listEntity) {
+        return boardApiRepository.findAll(listEntity);
     }
 }

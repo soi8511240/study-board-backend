@@ -11,6 +11,7 @@ import kr.co.test.week2board.board.model.ListResponseVO;
 import kr.co.test.week2board.board.service.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ import java.util.List;
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/board")
 @RequiredArgsConstructor
 public class BoardApiController {
 
@@ -33,17 +34,13 @@ public class BoardApiController {
      * @param listRequest
      * @return
      */
-    @RequestMapping(value="/boards", method=RequestMethod.GET)
+    @CrossOrigin(origins = "**")
+    @RequestMapping(value="/lists", method=RequestMethod.GET)
     @Operation(
             summary = "게시글 전체 조회",
             description = "게시글 전체를 조회합니다.",
             requestBody = @RequestBody(
-                content = @Content(
-                        schema = @Schema(
-                                allOf = ListRequestDTO.class,
-                                requiredProperties = {}
-                        )
-                )
+                content = @Content(schema = @Schema( allOf = ListRequestDTO.class))
             ),
             responses = {
                 @ApiResponse(
@@ -54,15 +51,15 @@ public class BoardApiController {
             }
     )
     public List<ListResponseVO> findAll(ListRequestDTO listRequest) throws Exception {
-        List<ListResponseVO> adminUserList = null;
+        List<ListResponseVO> responseList = null;
 
         try {
-            adminUserList = moduleService.listAll(listRequest);
+            responseList = moduleService.listAll(listRequest);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("-------------------------- {}",e.getMessage());
         }
 
-        return adminUserList;
+        return responseList;
     }
 
 }
