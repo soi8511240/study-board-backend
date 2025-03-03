@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -92,7 +93,10 @@ public class BoardService {
         return boardRepository.attachById(uuid);
     }
 
-    public List<ListResponseVO> listAll(ListEntity listEntity) {
-        return boardApiRepository.findAll(listEntity);
+    public ListsResponseVO listAll(ListsEntity listsEntity) {
+        List<ListsBoardVO> listsBoardVO = boardApiRepository.findAll(listsEntity);
+        long totalCnt = boardApiRepository.totalCnt(listsEntity);
+
+        return new ListsResponseVO(totalCnt, listsBoardVO);
     }
 }

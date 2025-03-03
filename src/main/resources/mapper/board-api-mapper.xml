@@ -4,44 +4,7 @@
 
 <mapper namespace="BoardApi">
 
-    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tb_board (title, content, writer, password, attachYn, categoryCode)
-        VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
-    </insert>
-
-    <!--    <resultMap id="BoardResponseMap" type="boardResponse">-->
-    <!--        <result column="totalCnt" property="totalCnt" javaType="Long" />-->
-    <!--&lt;!&ndash;        <association property="paging" javaType="paging" />&ndash;&gt;-->
-    <!--        <collection property="board" ofType="board" />-->
-    <!--        <collection property="category" ofType="category" />-->
-    <!--        <collection property="filter" ofType="searchFilter" />-->
-    <!--    </resultMap>-->
-
-    <select id="countBoards" resultType="Long" parameterType="listEntity">
-        SELECT COUNT(*) as totalCount
-        FROM board
-        WHERE useYn = 'Y'
-        <if test="fromDt != null and fromDt != ''">
-            AND b.createdAt &gt;= CONCAT(#{fromDt}, '00:00:00')
-        </if>
-        <if test="toDt != null and toDt != ''">
-            AND b.createdAt &lt;= CONCAT(#{toDt}, ' 23:59:59')
-        </if>
-        <if test="categoryId != null and categoryId != ''">
-            AND categoryCode = #{categoryId}
-        </if>
-        <if test="keyword != null and keyword != ''">
-            AND (
-            title LIKE CONCAT('%', #{keyword}, '%') OR
-            content LIKE CONCAT('%', #{keyword}, '%') OR
-            writer LIKE CONCAT('%', #{keyword}, '%')
-            )
-        </if>
-    </select>
-
-    <select id="findAll" resultType="listResponse" parameterType="listEntity">
-        SELECT b.*,
-        c.name AS categoryName
+    <sql id="selectWhere">
         FROM tb_board b
         LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
@@ -65,6 +28,30 @@
             b.writer LIKE CONCAT('%', #{keyword}, '%')
             )
         </if>
+    </sql>
+
+    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_board (title, content, writer, password, attachYn, categoryCode)
+        VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
+    </insert>
+
+    <!--    <resultMap id="BoardResponseMap" type="boardResponse">-->
+    <!--        <result column="totalCnt" property="totalCnt" javaType="Long" />-->
+    <!--&lt;!&ndash;        <association property="paging" javaType="paging" />&ndash;&gt;-->
+    <!--        <collection property="board" ofType="board" />-->
+    <!--        <collection property="category" ofType="category" />-->
+    <!--        <collection property="filter" ofType="searchFilter" />-->
+    <!--    </resultMap>-->
+
+    <select id="countAll" resultType="long" parameterType="listsEntity">
+        SELECT COUNT(*) as totalCount
+        <include refid="selectWhere"/>
+    </select>
+
+    <select id="findAll" resultType="listsBoard" parameterType="listsEntity">
+        SELECT b.*,
+        c.name AS categoryName
+        <include refid="selectWhere"/>
         ORDER BY b.id DESC
         <choose>
             <when test="currentPage != null and currentPage != ''">

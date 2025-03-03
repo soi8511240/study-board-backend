@@ -6,12 +6,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.co.test.week2board.board.model.ListRequestDTO;
-import kr.co.test.week2board.board.model.ListResponseVO;
+import kr.co.test.week2board.board.model.ListsRequestDTO;
+import kr.co.test.week2board.board.model.ListsResponseVO;
 import kr.co.test.week2board.board.service.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,38 +27,32 @@ public class BoardApiController {
 
     private final ModuleService moduleService;
 
-    /**
-     * 코드 단건 조회
-     *
-     * @param listRequest
-     * @return
-     */
-    @CrossOrigin(origins = "**")
+//    @CrossOrigin(origins = "**")
     @RequestMapping(value="/lists", method=RequestMethod.GET)
     @Operation(
             summary = "게시글 전체 조회",
             description = "게시글 전체를 조회합니다.",
             requestBody = @RequestBody(
-                content = @Content(schema = @Schema( allOf = ListRequestDTO.class))
+                content = @Content(schema = @Schema( allOf = ListsRequestDTO.class))
             ),
             responses = {
                 @ApiResponse(
                     responseCode = "200",
                     description = "성공",
-                    content = @Content(schema = @Schema(implementation = ListResponseVO.class))
+                    content = @Content(schema = @Schema(implementation = ListsResponseVO.class))
                 )
             }
     )
-    public List<ListResponseVO> findAll(ListRequestDTO listRequest) throws Exception {
-        List<ListResponseVO> responseList = null;
+    public ListsResponseVO findAll(ListsRequestDTO listRequest) throws Exception {
+        ListsResponseVO responseLists = null;
 
         try {
-            responseList = moduleService.listAll(listRequest);
+            responseLists = moduleService.listAll(listRequest);
         } catch (Exception e) {
-            log.error("-------------------------- {}",e.getMessage());
+            log.error("=========================== {}",e.getMessage());
         }
 
-        return responseList;
+        return responseLists;
     }
 
 }

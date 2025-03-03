@@ -1,9 +1,8 @@
 package kr.co.test.week2board.board.service;
 
-import kr.co.test.week2board.Constants;
-import kr.co.test.week2board.board.model.ListEntity;
-import kr.co.test.week2board.board.model.ListRequestDTO;
-import kr.co.test.week2board.board.model.ListResponseVO;
+import kr.co.test.week2board.board.model.ListsEntity;
+import kr.co.test.week2board.board.model.ListsRequestDTO;
+import kr.co.test.week2board.board.model.ListsResponseVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,15 +19,15 @@ public class ModuleService {
      * @param listRequest
      * @return
      */
-    public List<ListResponseVO> listAll(ListRequestDTO listRequest) {
-        ListEntity listEntity = new ListEntity();
+    public ListsResponseVO listAll(ListsRequestDTO listRequest) {
+        ListsEntity listsEntity = new ListsEntity();
 
-        listEntity.setCategoryId( listRequest.getCategoryId());
-        listEntity.setKeyword( listRequest.getKeyword());
-        listEntity.setToDt(listRequest.getToDt());
-        listEntity.setFromDt(listRequest.getFromDt());
-        listEntity.setCurrentPage(listRequest.getCurrentPage());
+        listsEntity.setCategoryId(listRequest.getCategoryId());
+        listsEntity.setKeyword(listRequest.getKeyword());
+        listsEntity.setToDt(listRequest.getToDt());
+        listsEntity.setFromDt(listRequest.getFromDt());
+        listsEntity.setCurrentPage(listRequest.getCurrentPage());
 
-        return boardService.listAll(listEntity);
+        return boardService.listAll(listsEntity);
     }
 }
