@@ -2,6 +2,7 @@
 
 - JDK : 17.0.14
 - SDK : corretto-17
+- myBatis
 
 ## dependencies
 ```
