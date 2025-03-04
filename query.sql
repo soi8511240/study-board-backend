@@ -4,6 +4,7 @@ use ebrainsoft_study;
 
 show tables;
 
+# tb_board
 # DROP table board;
 # DROP table tb_board;
 CREATE TABLE tb_board (
@@ -21,30 +22,6 @@ CREATE TABLE tb_board (
                        updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP  -- 수정 시각
 );
 COMMIT;
-
-INSERT INTO tb_board
-(title, content, writer, viewCnt, password, useYn, attachYn, replyYn, categoryCode, createdAt, updatedAt)
-VALUES
-    ('Title 1', 'Content for post 1', 'Writer1', 15, 'pass1', 'Y', 'N', 'Y', '101', '2022-11-04 10:23:45', '2022-11-04 10:23:45'),
-    ('Title 2', 'Content for post 2', 'Writer2', 5, 'pass2', 'Y', 'N', 'N', '102', '2023-02-15 14:55:20', '2023-02-15 14:55:20'),
-    ('Title 3', 'Content for post 3', 'Writer3', 0, 'pass3', 'Y', 'Y', 'N', '103', '2023-09-23 09:05:13', '2023-09-23 09:05:13'),
-    ('Title 4', 'Content for post 4', 'Writer4', 30, 'pass4', 'Y', 'N', 'N', '101', '2023-07-12 21:10:33', '2023-07-12 21:10:33'),
-    ('Title 5', 'Content for post 5', 'Writer5', 25, 'pass5', 'Y', 'Y', 'Y', '102', '2023-04-19 12:45:32', '2023-04-19 12:45:32'),
-    ('Title 6', 'Content for post 6', 'Writer6', 10, 'pass6', 'Y', 'Y', 'N', '103', '2023-01-09 06:34:12', '2023-01-09 06:34:12'),
-    ('Title 7', 'Content for post 7', 'Writer7', 5, 'pass7', 'Y', 'N', 'N', '101', '2023-06-25 14:15:44', '2023-06-25 14:15:44'),
-    ('Title 8', 'Content for post 8', 'Writer8', 0, 'pass8', 'Y', 'N', 'Y', '102', '2023-03-17 17:59:01', '2023-03-17 17:59:01'),
-    ('Title 9', 'Content for post 9', 'Writer9', 20, 'pass9', 'Y', 'Y', 'Y', '101', '2023-08-14 08:26:57', '2023-08-14 08:26:57'),
-    ('Title 10', 'Content for post 10', 'Writer10', 2, 'pass10', 'Y', 'N', 'N', '103', '2023-05-21 11:13:02', '2023-05-21 11:13:02'),
-    ('Title 11', 'Content for post 11', 'Writer11', 7, 'pass11', 'Y', 'Y', 'N', '102', '2023-01-23 10:05:16', '2023-01-23 10:05:16'),
-    ('Title 12', 'Content for post 12', 'Writer12', 8, 'pass12', 'Y', 'N', 'N', '101', '2022-12-30 15:48:25', '2022-12-30 15:48:25'),
-    ('Title 13', 'Content for post 13', 'Writer13', 12, 'pass13', 'Y', 'N', 'Y', '103', '2023-01-18 23:40:37', '2023-01-18 23:40:37'),
-    ('Title 14', 'Content for post 14', 'Writer14', 4, 'pass14', 'Y', 'Y', 'N', '102', '2023-03-06 13:07:12', '2023-03-06 13:07:12'),
-    ('Title 15', 'Content for post 15', 'Writer15', 18, 'pass15', 'Y', 'N', 'Y', '101', '2023-06-11 18:57:37', '2023-06-11 18:57:37'),
-    ('Title 16', 'Content for post 16', 'Writer16', 9, 'pass16', 'Y', 'N', 'N', '102', '2023-10-10 20:25:50', '2023-10-10 20:25:50'),
-    ('Title 17', 'Content for post 17', 'Writer17', 3, 'pass17', 'Y', 'N', 'Y', '101', '2023-09-09 05:01:38', '2023-09-09 05:01:38'),
-    ('Title 18', 'Content for post 18', 'Writer18', 1, 'pass18', 'Y', 'N', 'N', '103', '2023-05-23 22:12:45', '2023-05-23 22:12:45'),
-    ('Title 19', 'Content for post 19', 'Writer19', 20, 'pass19', 'Y', 'Y', 'Y', '102', '2023-07-01 19:03:22', '2023-07-01 19:03:22'),
-    ('Title 20', 'Content for post 20', 'Writer20', 11, 'pass20', 'Y', 'N', 'Y', '103', '2023-02-11 03:44:56', '2023-02-11 03:44:56');
 
 SELECT * FROM tb_board ORDER BY id DESC;
 
@@ -75,6 +52,7 @@ WHERE b.useYn = 'Y'
 
 UPDATE tb_board SET viewCnt = viewCnt+1 WHERE id =1;
 
+# tb_board 샘플
 INSERT INTO tb_board (categoryCode, title, content, writer, createdAt, updatedAt)
 VALUES
     ('101', 'Hello World', '첫 번째 게시글입니다.', 'admin', SUBDATE(NOW(), 1), SUBDATE(NOW(), 1)),
@@ -90,6 +68,31 @@ VALUES
     ('111', '비동기와 동기 프로그래밍', '코딩에서의 동시성 처리 기법 비교.', 'user9', SUBDATE(NOW(), 1), SUBDATE(NOW(), 1)),
     ('112', '80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목 80자가 넘어가는 긴 제목', '코딩에서의 동시성 처리 기법 비교.', 'user9', SUBDATE(NOW(), 1), SUBDATE(NOW(), 1));
 
+INSERT INTO tb_board
+(title, content, writer, viewCnt, password, useYn, attachYn, replyYn, categoryCode, createdAt, updatedAt)
+VALUES
+    ('Title 1', 'Content for post 1', 'Writer1', 15, 'pass1', 'Y', 'N', 'Y', '101', '2022-11-04 10:23:45', '2022-11-04 10:23:45'),
+    ('Title 2', 'Content for post 2', 'Writer2', 5, 'pass2', 'Y', 'N', 'N', '102', '2023-02-15 14:55:20', '2023-02-15 14:55:20'),
+    ('Title 3', 'Content for post 3', 'Writer3', 0, 'pass3', 'Y', 'Y', 'N', '103', '2023-09-23 09:05:13', '2023-09-23 09:05:13'),
+    ('Title 4', 'Content for post 4', 'Writer4', 30, 'pass4', 'Y', 'N', 'N', '101', '2023-07-12 21:10:33', '2023-07-12 21:10:33'),
+    ('Title 5', 'Content for post 5', 'Writer5', 25, 'pass5', 'Y', 'Y', 'Y', '102', '2023-04-19 12:45:32', '2023-04-19 12:45:32'),
+    ('Title 6', 'Content for post 6', 'Writer6', 10, 'pass6', 'Y', 'Y', 'N', '103', '2023-01-09 06:34:12', '2023-01-09 06:34:12'),
+    ('Title 7', 'Content for post 7', 'Writer7', 5, 'pass7', 'Y', 'N', 'N', '101', '2023-06-25 14:15:44', '2023-06-25 14:15:44'),
+    ('Title 8', 'Content for post 8', 'Writer8', 0, 'pass8', 'Y', 'N', 'Y', '102', '2023-03-17 17:59:01', '2023-03-17 17:59:01'),
+    ('Title 9', 'Content for post 9', 'Writer9', 20, 'pass9', 'Y', 'Y', 'Y', '101', '2023-08-14 08:26:57', '2023-08-14 08:26:57'),
+    ('Title 10', 'Content for post 10', 'Writer10', 2, 'pass10', 'Y', 'N', 'N', '103', '2023-05-21 11:13:02', '2023-05-21 11:13:02'),
+    ('Title 11', 'Content for post 11', 'Writer11', 7, 'pass11', 'Y', 'Y', 'N', '102', '2023-01-23 10:05:16', '2023-01-23 10:05:16'),
+    ('Title 12', 'Content for post 12', 'Writer12', 8, 'pass12', 'Y', 'N', 'N', '101', '2022-12-30 15:48:25', '2022-12-30 15:48:25'),
+    ('Title 13', 'Content for post 13', 'Writer13', 12, 'pass13', 'Y', 'N', 'Y', '103', '2023-01-18 23:40:37', '2023-01-18 23:40:37'),
+    ('Title 14', 'Content for post 14', 'Writer14', 4, 'pass14', 'Y', 'Y', 'N', '102', '2023-03-06 13:07:12', '2023-03-06 13:07:12'),
+    ('Title 15', 'Content for post 15', 'Writer15', 18, 'pass15', 'Y', 'N', 'Y', '101', '2023-06-11 18:57:37', '2023-06-11 18:57:37'),
+    ('Title 16', 'Content for post 16', 'Writer16', 9, 'pass16', 'Y', 'N', 'N', '102', '2023-10-10 20:25:50', '2023-10-10 20:25:50'),
+    ('Title 17', 'Content for post 17', 'Writer17', 3, 'pass17', 'Y', 'N', 'Y', '101', '2023-09-09 05:01:38', '2023-09-09 05:01:38'),
+    ('Title 18', 'Content for post 18', 'Writer18', 1, 'pass18', 'Y', 'N', 'N', '103', '2023-05-23 22:12:45', '2023-05-23 22:12:45'),
+    ('Title 19', 'Content for post 19', 'Writer19', 20, 'pass19', 'Y', 'Y', 'Y', '102', '2023-07-01 19:03:22', '2023-07-01 19:03:22'),
+    ('Title 20', 'Content for post 20', 'Writer20', 11, 'pass20', 'Y', 'N', 'Y', '103', '2023-02-11 03:44:56', '2023-02-11 03:44:56');
+
+# tb_board - 수정
 UPDATE tb_board
 SET
     title = '또 수정된 제목11',
@@ -98,19 +101,6 @@ SET
     updatedAt = NOW()
 WHERE
     id = 1;
-
-SELECT *
-FROM tb_board
-WHERE useYn = 'Y'
-  AND (title LIKE CONCAT('%', '', '%')
-    OR content LIKE CONCAT('%', '', '%')
-    OR writer LIKE CONCAT('%', '', '%'));
-
-UPDATE tb_board
-SET
-    useYn = 'N'
-WHERE
-    id =3;
 
 ## category table
 # DROP table category;
@@ -160,7 +150,8 @@ SET
 WHERE
     id != '0';
 
-DROP table tb_reply_board;
+# DROP table reply_board;
+# DROP table tb_reply_board;
 CREATE TABLE tb_reply_board (
                          id BIGINT AUTO_INCREMENT PRIMARY KEY, -- 댓글 고유 ID
                          board_id BIGINT,                      -- 게시판 ID
