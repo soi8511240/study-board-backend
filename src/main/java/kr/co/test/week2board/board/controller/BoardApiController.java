@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Board-Controller", description = "게시글 API 엔드포인트")
@@ -41,7 +42,7 @@ public class BoardApiController {
                 )
             }
     )
-    public ListsResponseVO retrieveAll(ListsRequestDTO listRequest) {
+    public ListsResponseVO findAll(ListsRequestDTO listRequest) {
         ListsResponseVO responseLists = null;
 
         try {
@@ -53,8 +54,22 @@ public class BoardApiController {
         return responseLists;
     }
 
+    @Operation(
+            summary = "게시글 단건 상세",
+            description = "게시글 단건 상세 내용를 조회합니다.",
+            requestBody = @RequestBody(
+                    content = @Content(schema = @Schema( requiredProperties = {"id"}))
+            ),
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "성공",
+                            content = @Content(schema = @Schema(implementation = DetailResponseVO.class))
+                    )
+            }
+    )
     @RequestMapping(value="{id}", method=RequestMethod.GET)
-    public DetailResponseVO findById(Long id) {
+    public DetailResponseVO findById(@RequestParam Long id) {
         DetailResponseVO response = null;
 
         try {
