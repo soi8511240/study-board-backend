@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import kr.co.test.week2board.board.model.DetailResponseVO;
 import kr.co.test.week2board.board.model.ListsRequestDTO;
 import kr.co.test.week2board.board.model.ListsResponseVO;
 import kr.co.test.week2board.board.service.ModuleService;
@@ -40,16 +41,42 @@ public class BoardApiController {
                 )
             }
     )
-    public ListsResponseVO findAll(ListsRequestDTO listRequest) throws Exception {
+    public ListsResponseVO retrieveAll(ListsRequestDTO listRequest) {
         ListsResponseVO responseLists = null;
 
         try {
-            responseLists = moduleService.listAll(listRequest);
+            responseLists = moduleService.retrieveAll(listRequest);
         } catch (Exception e) {
             log.error("=========================== {}",e.getMessage());
         }
 
         return responseLists;
     }
+
+    @RequestMapping(value="{id}", method=RequestMethod.GET)
+    public DetailResponseVO findById(Long id) {
+        DetailResponseVO response = null;
+
+        try {
+            response = moduleService.retrieveDetail(id);
+        } catch (Exception e) {
+            log.error("=========================== {}",e.getMessage());
+        }
+
+        return response;
+    }
+
+//    @RequestMapping(value="{id}", method=RequestMethod.GET)
+//    public DetailResponseVO findById(Long id) {
+//        DetailResponseVO response = null;
+//
+//        try {
+//            response = moduleService.detailOne(id);
+//        } catch (Exception e) {
+//            log.error("=========================== {}",e.getMessage());
+//        }
+//
+//        return response;
+//    }
 
 }

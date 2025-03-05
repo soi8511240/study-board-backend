@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BoardDTO {
+public class _BoardDTO {
     private Long id;
     private String title;
     private String content;

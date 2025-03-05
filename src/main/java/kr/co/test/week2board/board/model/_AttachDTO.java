@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AttachDTO {
+public class _AttachDTO {
     private Long id;
     private Long boardId;
     private String originalFileName;

@@ -1,9 +1,9 @@
 package kr.co.test.week2board.board.repository;
 
-import kr.co.test.week2board.board.model.AttachDTO;
-import kr.co.test.week2board.board.model.BoardDTO;
-import kr.co.test.week2board.board.model.CategoryDTO;
-import kr.co.test.week2board.board.model.SearchFilterDTO;
+import kr.co.test.week2board.board.model._AttachDTO;
+import kr.co.test.week2board.board.model._BoardDTO;
+import kr.co.test.week2board.board.model._CategoryDTO;
+import kr.co.test.week2board.board.model._SearchFilterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,15 +14,15 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class BoardRepository {
+public class _BoardRepository {
 
     private final SqlSessionTemplate sql;
 
-    public int save(BoardDTO boardDTO) {
+    public int save(_BoardDTO boardDTO) {
         return sql.insert("Board.save", boardDTO);
     }
 
-    public List<BoardDTO> findAll(SearchFilterDTO searchFilterDTO) {
+    public List<_BoardDTO> findAll(_SearchFilterDTO searchFilterDTO) {
         return sql.selectList("Board.findAll", searchFilterDTO);
     }
 
@@ -30,15 +30,15 @@ public class BoardRepository {
         sql.update("Board.updateViewCnt", id);
     }
 
-    public BoardDTO findById(Long id) {
+    public _BoardDTO findById(Long id) {
         return sql.selectOne("Board.findById", id);
     }
 
-    public List<CategoryDTO> categoryAll() {
+    public List<_CategoryDTO> categoryAll() {
         return sql.selectList("Board.categoryAll");
     }
 
-    public void update(BoardDTO boardDTO) {
+    public void update(_BoardDTO boardDTO) {
         sql.update("Board.update", boardDTO);
     }
 
@@ -46,19 +46,19 @@ public class BoardRepository {
         sql.update("Board.remove", id);
     }
 
-    public void saveFile(AttachDTO attachDTO) {
+    public void saveFile(_AttachDTO attachDTO) {
         sql.insert("Board.saveFile", attachDTO);
     }
 
-    public Long countBoards(SearchFilterDTO filters) {
+    public Long countBoards(_SearchFilterDTO filters) {
         return sql.selectOne("Board.countBoards", filters);
     }
 
-    public List<AttachDTO> getAttachList(Long id) {
+    public List<_AttachDTO> getAttachList(Long id) {
         return sql.selectList("Board.attachAll", id);
     }
 
-    public AttachDTO attachById(String uuid) {
+    public _AttachDTO attachById(String uuid) {
         return sql.selectOne("Board.attachById", uuid);
     }
 }

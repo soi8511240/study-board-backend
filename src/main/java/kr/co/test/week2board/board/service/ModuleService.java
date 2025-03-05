@@ -1,5 +1,6 @@
 package kr.co.test.week2board.board.service;
 
+import kr.co.test.week2board.board.model.DetailResponseVO;
 import kr.co.test.week2board.board.model.ListsEntity;
 import kr.co.test.week2board.board.model.ListsEntityMapper;
 import kr.co.test.week2board.board.model.ListsRequestDTO;
@@ -22,10 +23,14 @@ public class ModuleService {
      * @param listRequest
      * @return
      */
-    public ListsResponseVO listAll(ListsRequestDTO listRequest) {
+    public ListsResponseVO retrieveAll(ListsRequestDTO listRequest) {
         ListsEntityMapper mapper = ListsEntityMapper.INSTANCE;
         ListsEntity listsEntity = mapper.toListsEntity(listRequest);
 
-        return boardService.listAll(listsEntity);
+        return boardService.retrieveAll(listsEntity);
+    }
+
+    public DetailResponseVO retrieveDetail(Long id) {
+        return boardService.retrieveDetail(id);
     }
 }

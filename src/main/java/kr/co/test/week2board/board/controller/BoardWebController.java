@@ -1,8 +1,8 @@
 package kr.co.test.week2board.board.controller;
 
-import kr.co.test.week2board.board.model.BoardDTO;
-import kr.co.test.week2board.board.model.SearchFilterDTO;
-import kr.co.test.week2board.board.service.ModuleServiceImpl;
+import kr.co.test.week2board.board.model._BoardDTO;
+import kr.co.test.week2board.board.model._SearchFilterDTO;
+import kr.co.test.week2board.board.service._ModuleServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class BoardWebController {
 
-    private final ModuleServiceImpl moduleServiceImpl;
+    private final _ModuleServiceImpl moduleServiceImpl;
 
     /**
      * 메인 페이지
@@ -48,7 +48,7 @@ public class BoardWebController {
      * @return 작성된 글의 상세 페이지로 리다이렉션
      */
     @PostMapping("/save")
-    public String save(BoardDTO boardDTO){
+    public String save(_BoardDTO boardDTO){
         long id = moduleServiceImpl.save(boardDTO);
 
         return "redirect:/board/"+boardDTO.getId();
@@ -62,7 +62,7 @@ public class BoardWebController {
      * @return 게시글 목록 페이지
      */
     @GetMapping("/list")
-    public String findAll(SearchFilterDTO searchFilter, Model model){
+    public String findAll(_SearchFilterDTO searchFilter, Model model){
         model.addAttribute("response", moduleServiceImpl.list(searchFilter));
 
         return "list";
@@ -104,7 +104,7 @@ public class BoardWebController {
      * @return 수정된 게시글의 상세 페이지
      */
     @PostMapping("/update/{id}")
-    public String updateById(BoardDTO boardDTO, Model model){
+    public String updateById(_BoardDTO boardDTO, Model model){
         model.addAttribute("response", moduleServiceImpl.updateById(boardDTO));
 
         return "detail";

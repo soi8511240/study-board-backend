@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SearchFilterDTO {
+public class _SearchFilterDTO {
     private String categoryId;
     private String keyword;
     private String fromDt;
@@ -19,7 +19,7 @@ public class SearchFilterDTO {
     private int fetchCnt;
     private int offset;
 
-    public SearchFilterDTO(){
+    public _SearchFilterDTO(){
         this.categoryId = "";
         this.keyword = "";
         this.fromDt = CommonUtil.getOneYearAgo();
@@ -29,7 +29,7 @@ public class SearchFilterDTO {
         this.offset = 0;
     }
 
-    public SearchFilterDTO(SearchFilterDTO dto){
+    public _SearchFilterDTO(_SearchFilterDTO dto){
         this.categoryId = dto.getCategoryId().isEmpty() ? "" : dto.getCategoryId();
         this.keyword = dto.getKeyword().isEmpty() ? "" : dto.getKeyword();
         this.fromDt = dto.getFromDt().isEmpty() ? CommonUtil.getOneYearAgo() : dto.getFromDt();

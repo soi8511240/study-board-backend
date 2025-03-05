@@ -1,8 +1,8 @@
 package kr.co.test.week2board.board.service;
 
-import kr.co.test.week2board.board.model.BoardDTO;
-import kr.co.test.week2board.board.model.BoardResponseDTO;
-import kr.co.test.week2board.board.model.SearchFilterDTO;
+import kr.co.test.week2board.board.model._BoardDTO;
+import kr.co.test.week2board.board.model._BoardResponseDTO;
+import kr.co.test.week2board.board.model._SearchFilterDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,14 +14,14 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ModuleServiceImpl {
-    private final BoardService boardService;
+public class _ModuleServiceImpl {
+    private final _BoardService boardService;
 
     /**
      * 저장 api
      * @return 게시글 id
      */
-    public long save(BoardDTO boardDTO) {
+    public long save(_BoardDTO boardDTO) {
         long id = 0;
         try {
             id = boardService.save(boardDTO);
@@ -35,8 +35,8 @@ public class ModuleServiceImpl {
      * 등록 페이지 
      * @return categoryList
      */
-    public BoardResponseDTO loadSaveData() {
-        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+    public _BoardResponseDTO loadSaveData() {
+        _BoardResponseDTO boardResponseDTO = new _BoardResponseDTO();
         try {
             boardResponseDTO.setCategory(boardService.categoryAll());
         }catch (Exception e){
@@ -50,12 +50,12 @@ public class ModuleServiceImpl {
      * 글목록
      * @return BoardResponseDTO
      */
-    public BoardResponseDTO list(SearchFilterDTO searchFilter) {
+    public _BoardResponseDTO list(_SearchFilterDTO searchFilter) {
 
-        SearchFilterDTO filters = new SearchFilterDTO(searchFilter);
+        _SearchFilterDTO filters = new _SearchFilterDTO(searchFilter);
         // Todo : 안함 매퍼에서 처리로
 
-        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+        _BoardResponseDTO boardResponseDTO = new _BoardResponseDTO();
 
         try {
             boardResponseDTO.setTotalCnt(boardService.countBoards(filters));
@@ -69,7 +69,7 @@ public class ModuleServiceImpl {
         return boardResponseDTO;
     }
 
-    public BoardResponseDTO findById(Long id) {
+    public _BoardResponseDTO findById(Long id) {
         try {
             boardService.updateViewCnt(id); // 조회수 증가
             return wrapBoardResponseWithCategory(boardService.findById(id), false);
@@ -79,7 +79,7 @@ public class ModuleServiceImpl {
         }
     }
 
-    public BoardResponseDTO loadUpdateData(Long id) {
+    public _BoardResponseDTO loadUpdateData(Long id) {
         try {
             return wrapBoardResponseWithCategory(boardService.findById(id), true);
         }catch (Exception e){
@@ -88,9 +88,9 @@ public class ModuleServiceImpl {
         return null;
     }
 
-    public BoardResponseDTO updateById(BoardDTO boardDTO) {
-        List<BoardDTO> boardDTOList = new ArrayList<>();
-        BoardResponseDTO boardResponseDTO = new BoardResponseDTO();
+    public _BoardResponseDTO updateById(_BoardDTO boardDTO) {
+        List<_BoardDTO> boardDTOList = new ArrayList<>();
+        _BoardResponseDTO boardResponseDTO = new _BoardResponseDTO();
 
         Long id = boardDTO.getId();
 
@@ -126,9 +126,9 @@ public class ModuleServiceImpl {
 //        }
 //    }
 
-    private BoardResponseDTO wrapBoardResponseWithCategory(BoardDTO board, boolean includeCategory) {
-        BoardResponseDTO response = new BoardResponseDTO();
-        List<BoardDTO> boardList = new ArrayList<>();
+    private _BoardResponseDTO wrapBoardResponseWithCategory(_BoardDTO board, boolean includeCategory) {
+        _BoardResponseDTO response = new _BoardResponseDTO();
+        List<_BoardDTO> boardList = new ArrayList<>();
 
         boardList.add(board);
         response.setBoard(boardList);

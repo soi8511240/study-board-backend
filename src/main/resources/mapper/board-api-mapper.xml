@@ -73,7 +73,7 @@
 <!--            </otherwise>-->
 <!--        </choose>-->
 
-    <select id="findById" parameterType="Long" resultType="board">
+    <select id="findById" parameterType="long" resultType="detailResponse">
         SELECT b.*, c.name AS categoryName
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
