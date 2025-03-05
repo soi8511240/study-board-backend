@@ -53,15 +53,25 @@
         c.name AS categoryName
         <include refid="selectWhere"/>
         ORDER BY b.id DESC
+        LIMIT #{fetchCnt}
         <choose>
-            <when test="currentPage != null and currentPage != ''">
-                LIMIT (#{currentPage} - 1) * #{fetchCnt}, #{fetchCnt}
+            <when test="offset != 0">
+                OFFSET #{offset}
             </when>
             <otherwise>
-                LIMIT 0, #{fetchCnt}
+                OFFSET 0
             </otherwise>
         </choose>
     </select>
+<!--        OFFSET (#{currentPage} - 1) * #{fetchCnt};-->
+<!--        <choose>-->
+<!--            <when test="currentPage != null and currentPage != ''">-->
+<!--                LIMIT (#{currentPage} - 1) * #{fetchCnt}, #{fetchCnt}-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                LIMIT 0, #{fetchCnt}-->
+<!--            </otherwise>-->
+<!--        </choose>-->
 
     <select id="findById" parameterType="Long" resultType="board">
         SELECT b.*, c.name AS categoryName

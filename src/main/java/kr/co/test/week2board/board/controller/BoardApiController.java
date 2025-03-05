@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @Tag(name = "Board-Controller", description = "게시글 API 엔드포인트")
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 @Slf4j
@@ -27,7 +25,6 @@ public class BoardApiController {
 
     private final ModuleService moduleService;
 
-//    @CrossOrigin(origins = "**")
     @RequestMapping(value="/lists", method=RequestMethod.GET)
     @Operation(
             summary = "게시글 전체 조회",

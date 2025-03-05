@@ -1,13 +1,16 @@
 package kr.co.test.week2board.board.service;
 
 import kr.co.test.week2board.board.model.ListsEntity;
+import kr.co.test.week2board.board.model.ListsEntityMapper;
 import kr.co.test.week2board.board.model.ListsRequestDTO;
 import kr.co.test.week2board.board.model.ListsResponseVO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ModuleService {
@@ -20,13 +23,8 @@ public class ModuleService {
      * @return
      */
     public ListsResponseVO listAll(ListsRequestDTO listRequest) {
-        ListsEntity listsEntity = new ListsEntity();
-
-        listsEntity.setCategoryId(listRequest.getCategoryId());
-        listsEntity.setKeyword(listRequest.getKeyword());
-        listsEntity.setToDt(listRequest.getToDt());
-        listsEntity.setFromDt(listRequest.getFromDt());
-        listsEntity.setCurrentPage(listRequest.getCurrentPage());
+        ListsEntityMapper mapper = ListsEntityMapper.INSTANCE;
+        ListsEntity listsEntity = mapper.toListsEntity(listRequest);
 
         return boardService.listAll(listsEntity);
     }

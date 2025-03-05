@@ -2,9 +2,15 @@ package kr.co.test.week2board.board.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import kr.co.test.week2board.Constants;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
-@Data
+@Slf4j
+@Getter
+@Setter
+@ToString
 @Schema(description = "게시글 목록 QUERY를 위한 Entity")
 public class ListsEntity {
     @Schema(description = "카테고리 아이디")
@@ -20,4 +26,7 @@ public class ListsEntity {
     private int currentPage;
     @Schema(description = "페이징 건수")
     private int fetchCnt = Constants.FETCH_COUNT;
+    @Schema(description = "리스트 시작지점")
+    private int offset;
+
 }
