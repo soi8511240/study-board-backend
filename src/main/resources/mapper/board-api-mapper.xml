@@ -30,7 +30,7 @@
         </if>
     </sql>
 
-    <insert id="save" parameterType="insertBoard" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="insertEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_board (title, content, writer, password, attachYn, categoryCode)
         VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
     </insert>
@@ -88,7 +88,7 @@
         WHERE id = #{id};
     </select>
 
-    <update id="update" parameterType="updateRequest">
+    <update id="updateById" parameterType="updateRequest">
         UPDATE tb_board
         SET
             title = #{title},
@@ -107,11 +107,11 @@
         WHERE id = #{id};
     </update>
 
-    <select id="categoryAll" resultType="category">
-        SELECT *
-        FROM tb_category
-        WHERE useYn = 'Y';
-    </select>
+<!--    <select id="categoryAll" resultType="category">-->
+<!--        SELECT *-->
+<!--        FROM tb_category-->
+<!--        WHERE useYn = 'Y';-->
+<!--    </select>-->
 
     <update id="removeById" parameterType="Long">
         UPDATE tb_board
@@ -121,24 +121,24 @@
             id = ${id};
     </update>
 
-    <insert id="saveFile" parameterType="attach">
-        INSERT INTO board_attach (boardId, originalFileName, storedFileName)
-        VALUES(#{boardId}, #{originalFileName}, #{storedFileName});
-    </insert>
+<!--    <insert id="saveFile" parameterType="attach">-->
+<!--        INSERT INTO board_attach (boardId, originalFileName, storedFileName)-->
+<!--        VALUES(#{boardId}, #{originalFileName}, #{storedFileName});-->
+<!--    </insert>-->
 
-    <select id="attachAll" parameterType="Long" resultType="attach">
-        SELECT * FROM board_attach
-        WHERE boardId = #{id}
-          AND useYn = 'Y'
-        ORDER BY id DESC;
-    </select>
+<!--    <select id="attachAll" parameterType="Long" resultType="attach">-->
+<!--        SELECT * FROM board_attach-->
+<!--        WHERE boardId = #{id}-->
+<!--          AND useYn = 'Y'-->
+<!--        ORDER BY id DESC;-->
+<!--    </select>-->
 
-    <select id="attachById" parameterType="String" resultType="attach">
-        SELECT * FROM board_attach
-        WHERE storedFileName = #{name}
-          AND useYn = 'Y'
-        ORDER BY id DESC;
-    </select>
+<!--    <select id="attachById" parameterType="String" resultType="attach">-->
+<!--        SELECT * FROM board_attach-->
+<!--        WHERE storedFileName = #{name}-->
+<!--          AND useYn = 'Y'-->
+<!--        ORDER BY id DESC;-->
+<!--    </select>-->
 
 
 </mapper>

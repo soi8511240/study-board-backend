@@ -134,18 +134,4 @@ public class BoardApiController {
         return response;
     }
 
-
-//    @RequestMapping(value="{id}", method=RequestMethod.GET)
-//    public DetailResponseVO findById(Long id) {
-//        DetailResponseVO response = null;
-//
-//        try {
-//            response = moduleService.detailOne(id);
-//        } catch (Exception e) {
-//            log.error("=========================== {}",e.getMessage());
-//        }
-//
-//        return response;
-//    }
-
 }

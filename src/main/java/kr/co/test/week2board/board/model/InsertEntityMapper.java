@@ -22,10 +22,10 @@ public interface InsertEntityMapper {
     /**
      *  useYn, replyYn : Default 'Y' 설정
      *  createdAt, updatedAt, viewCnt, categoryName, attachYn 값 설정
-     * @param ignoredListRequest 안쓰는 파라미터입니다.
+     * @param ignoredRequest 안쓰는 파라미터입니다.
      */
     @AfterMapping // or @BeforeMapping
-    default void setDefault(ListsRequestDTO ignoredListRequest, @MappingTarget InsertEntity insertEntity) {
+    default void setDefault(InsertRequestDTO ignoredRequest, @MappingTarget InsertEntity insertEntity) {
         insertEntity.setUseYn("Y");
         insertEntity.setReplyYn("N");
         insertEntity.setCreatedAt(CommonUtil.getToday());

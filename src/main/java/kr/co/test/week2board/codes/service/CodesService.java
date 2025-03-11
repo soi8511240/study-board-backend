@@ -12,7 +12,7 @@ import java.util.List;
 public class CodesService {
     private final CodesRepository codesRepository;
 
-    public List<CategoryDTO2> categoryAll() {
-        return codesRepository.categoryAll();
-    }
+//    public List<CategoryDTO2> categoryAll() {
+//        return codesRepository.categoryAll();
+//    }
 }

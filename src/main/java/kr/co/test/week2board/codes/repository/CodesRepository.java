@@ -12,7 +12,7 @@ import java.util.List;
 public class CodesRepository {
     private final SqlSessionTemplate sql;
 
-    public List<CategoryDTO2> categoryAll() {
-        return sql.selectList("Codes.categoryAll");
-    }
+//    public List<CategoryDTO2> categoryAll() {
+//        return sql.selectList("Codes.categoryAll");
+//    }
 }

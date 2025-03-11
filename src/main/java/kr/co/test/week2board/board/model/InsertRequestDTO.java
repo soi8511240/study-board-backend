@@ -13,16 +13,18 @@ public class InsertRequestDTO {
     @NotBlank(message = "제목은 필수 값입니다.")
     @Schema(description = "제목")
     private String title;
+
     @NotBlank(message = "게시글은 필수 값입니다.")
     @Schema(description = "게시글 내용")
     private String content;
+
     @NotBlank
     @NotBlank(message = "글쓴이은 필수 값입니다.")
     @Schema(description = "글쓴이")
     private String writer;
+
     @Schema(description = "카테고리 분류 코드")
     private String categoryCode;
-
 
     @Schema(description = "암호")
 //    @Pattern(

@@ -19,21 +19,17 @@ public class BoardService {
     /**
      * 리스트 서비스
      * @param listsEntity
-     * @return
      */
     public ListsResponseVO retrieveAll(ListsEntity listsEntity) {
         List<ListsBoardVO> listsBoardVO = boardApiRepository.retrieveAll(listsEntity);
         long totalCnt = boardApiRepository.totalCnt(listsEntity);
 
-        ListsResponseVO listsResponseVO = new ListsResponseVO(totalCnt, listsBoardVO);
-
-        return listsResponseVO;
+        return new ListsResponseVO(totalCnt, listsBoardVO);
     }
 
     /**
      * 상세 서비스
      * @param id
-     * @return
      */
     public DetailResponseVO retrieveDetail(Long id) {
         return boardApiRepository.retrieveDetail(id);
@@ -42,7 +38,6 @@ public class BoardService {
     /**
      * 글 등록 서비스
      * @param insertEntity
-     * @return
      */
     public long insertBoard(InsertEntity insertEntity) {
         return boardApiRepository.insert(insertEntity);
@@ -51,7 +46,6 @@ public class BoardService {
     /**
      * 비밀번호 비교 서비스
      * @param id
-     * @return
      */
     public PasswordVO matchedPassword(long id) {
         return boardApiRepository.matchedPassword(id);
@@ -60,7 +54,6 @@ public class BoardService {
     /**
      * 글 수정 서비스
      * @param updateRequestDTO
-     * @return
      */
     public long updateById(@Valid UpdateRequestDTO updateRequestDTO) {
         return boardApiRepository.updateById(updateRequestDTO);
@@ -69,12 +62,10 @@ public class BoardService {
     /**
      * 글 삭제 서비스
      * @param id
-     * @return
      */
     public long removeById(Long id) {
         return boardApiRepository.removeById(id);
     }
-
 
 //        public Long save(_BoardDTO boardDTO) throws IOException {
 //            long id; // sql result 카운터
@@ -92,7 +83,8 @@ public class BoardService {
 //                log.info("log key:{}",boardDTO);
 //                for (MultipartFile attachFile : boardDTO.getAttachFiles()){
 //                    String fileName = attachFile.getOriginalFilename();
-//                    String storeFileName = System.currentTimeMillis() + fileName; // Todo: 더 다양한 케이스 ,uuid 추천
+//                    String storeFileName = System.currentTimeMillis() + fileName; 더 다양한 케이스 ,uuid 추천
+//
 //
 //                    _AttachDTO attachDTO = new _AttachDTO();
 //                    attachDTO.setOriginalFileName(fileName);
