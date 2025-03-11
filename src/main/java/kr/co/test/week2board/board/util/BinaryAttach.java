@@ -1,12 +1,12 @@
 package kr.co.test.week2board.board.util;
 
-import kr.co.test.week2board.board.model._AttachDTO;
+//import kr.co.test.week2board.board.model._AttachDTO;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BinaryAttach {
 
-    public String saveFile(_AttachDTO attachDTO){
+    public String saveFile(){
 //        byte fileByte[] = Base64.getDecoder().decode(fileBinary.getbytes("UTF-8"));
 //
 //        Map<String,Object> map = commonService.selectFileInfo(commandMap.getMap());
