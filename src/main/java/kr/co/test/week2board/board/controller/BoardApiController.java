@@ -6,16 +6,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kr.co.test.week2board.board.model.DetailResponseVO;
-import kr.co.test.week2board.board.model.ListsRequestDTO;
-import kr.co.test.week2board.board.model.ListsResponseVO;
+import jakarta.validation.Valid;
+import kr.co.test.week2board.board.model.*;
 import kr.co.test.week2board.board.service.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Board-Controller", description = "게시글 API 엔드포인트")
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
@@ -68,6 +64,7 @@ public class BoardApiController {
                     )
             }
     )
+
     @RequestMapping(value="{id}", method=RequestMethod.GET)
     public DetailResponseVO findById(@RequestParam Long id) {
         DetailResponseVO response = null;
@@ -80,6 +77,63 @@ public class BoardApiController {
 
         return response;
     }
+
+    @RequestMapping(value = "/insert", method=RequestMethod.POST)
+    @Operation(summary = "게시글 작성", description = "게시글 작성에 사용하는 API입니다.")
+    public long insertCode(@RequestBody @Valid InsertRequestDTO insertRequestDTO) {
+        long response = 0L;
+
+        try {
+            response = moduleService.insertBoard(insertRequestDTO);
+        } catch (Exception e) {
+            log.error("=========================== {}",e.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value="/isMatchPassword", method=RequestMethod.POST)
+    @Operation(summary = "비밀번호 비교", description = "입력된 비밀번호를 비교하는 API입니다.")
+    public boolean isMatchPassword(@RequestParam Long id, @RequestParam String password) {
+        boolean response = false;
+
+        try {
+            response = moduleService.matchedPassword(id,password);
+        } catch (Exception e) {
+            log.error("=========================== {}",e.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value="/update", method=RequestMethod.POST)
+    @Operation(summary = "게시글 수정", description = "게시글 수정 API입니다.")
+    public long updateBoardById(@RequestBody @Valid UpdateRequestDTO updateRequestDTO) {
+        long response = 0L;
+
+        try {
+            response = moduleService.updateById(updateRequestDTO);
+        } catch (Exception e) {
+            log.error("=========================== {}",e.getMessage());
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value="/remove", method=RequestMethod.GET)
+    @Operation(summary = "게시글 삭제", description = "게시글 삭제 API입니다.")
+    public long removeBoardById(@RequestParam Long id) {
+        long response = 0L;
+
+        try {
+            response = moduleService.removeById(id);
+        } catch (Exception e) {
+            log.error("=========================== {}",e.getMessage());
+        }
+
+        return response;
+    }
+
 
 //    @RequestMapping(value="{id}", method=RequestMethod.GET)
 //    public DetailResponseVO findById(Long id) {

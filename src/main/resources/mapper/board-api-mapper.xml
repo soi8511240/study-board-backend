@@ -30,7 +30,7 @@
         </if>
     </sql>
 
-    <insert id="save" parameterType="board" useGeneratedKeys="true" keyProperty="id">
+    <insert id="save" parameterType="insertBoard" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_board (title, content, writer, password, attachYn, categoryCode)
         VALUES(#{title}, #{content}, #{writer}, #{password}, #{attachYn}, #{categoryCode});
     </insert>
@@ -82,7 +82,13 @@
         ORDER BY b.id DESC;
     </select>
 
-    <update id="update" parameterType="board">
+    <select id="findPasswordById" parameterType="long" resultType="password">
+        SELECT *
+        FROM tb_board
+        WHERE id = #{id};
+    </select>
+
+    <update id="update" parameterType="updateRequest">
         UPDATE tb_board
         SET
             title = #{title},
@@ -107,7 +113,7 @@
         WHERE useYn = 'Y';
     </select>
 
-    <update id="remove" parameterType="Long">
+    <update id="removeById" parameterType="Long">
         UPDATE tb_board
         SET
             useYn = 'N'
