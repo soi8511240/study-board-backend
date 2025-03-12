@@ -10,7 +10,7 @@
         WHERE b.useYn = 'Y'
 
         <if test="fromDt != null and fromDt != ''">
-            AND b.createdAt &gt;= CONCAT(#{fromDt}, '00:00:00')
+            AND b.createdAt &gt;= CONCAT(#{fromDt}, ' 00:00:00')
         </if>
 
         <if test="toDt != null and toDt != ''">
@@ -49,8 +49,7 @@
     </select>
 
     <select id="findAll" resultType="listsBoard" parameterType="listsEntity">
-        SELECT b.*,
-        c.name AS categoryName
+        SELECT b.*, c.name AS categoryName
         <include refid="selectWhere"/>
         ORDER BY b.id DESC
         LIMIT #{fetchCnt}
@@ -74,7 +73,7 @@
 <!--        </choose>-->
 
     <select id="findById" parameterType="long" resultType="detailResponse">
-        SELECT b.*, c.name AS categoryName
+        SELECT b.id, b.title, b.content, b.writer, b.viewCnt, b.createdAt, b.updatedAt, b.attachYn, c.name AS categoryName
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'

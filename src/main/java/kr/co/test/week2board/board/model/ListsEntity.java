@@ -28,5 +28,4 @@ public class ListsEntity {
     private int fetchCnt = Constants.FETCH_COUNT;
     @Schema(description = "리스트 시작지점")
     private int offset;
-
 }

@@ -50,22 +50,8 @@ public class BoardApiController {
         return responseLists;
     }
 
-    @Operation(
-            summary = "게시글 단건 상세",
-            description = "게시글 단건 상세 내용를 조회합니다.",
-            requestBody = @RequestBody(
-                    content = @Content(schema = @Schema( requiredProperties = {"id"}))
-            ),
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "성공",
-                            content = @Content(schema = @Schema(implementation = DetailResponseVO.class))
-                    )
-            }
-    )
-
-    @RequestMapping(value="{id}", method=RequestMethod.GET)
+    @Operation(summary = "게시글 단건 상세", description = "게시글 단건 상세 내용를 조회합니다.")
+    @RequestMapping(value="/detail", method=RequestMethod.GET)
     public DetailResponseVO findById(@RequestParam Long id) {
         DetailResponseVO response = null;
 

@@ -8,6 +8,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class DetailResponseVO {
+    // todo: 게시일 시간 등등 백엔드에서 데이터가공이 필요한 부분에 대해서는
+    // 한다면 쿼리 resultType을 entity로 두고
+    // record response vo객체를 만들면서 데이터 가공을 해야하는가?
+    // todo: 파일첨부모델을 불변성으로 처리하면 좋은것인가?
     @Schema(description = "아이디")
     private Long id;
     @Schema(description = "제목")

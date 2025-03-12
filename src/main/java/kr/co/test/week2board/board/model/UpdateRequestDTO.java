@@ -7,22 +7,20 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Setter
-@Getter
-@RequiredArgsConstructor
-public class UpdateRequestDTO {
-    private Long id;
-    private String title;
-    private String content;
-    private String writer;
-    private String categoryCode;
-    private String password;
-    private String useYn;
-    private String replyYn;
-    private String createdAt;
-    private String updatedAt;
-    private Long viewCnt;
-    private String categoryName;
-    private String attachYn;
-    private List<MultipartFile> attachFiles;
+public record UpdateRequestDTO (
+    Long id,
+    String title,
+    String content,
+    String writer,
+    String categoryCode,
+    String password,
+    String useYn,
+    String replyYn,
+    String createdAt,
+    String updatedAt,
+    Long viewCnt,
+    String categoryName,
+    String attachYn,
+    List<MultipartFile> attachFiles
+    ){
 }
