@@ -1,18 +1,16 @@
 package kr.co.test.week2board.board.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
 @Getter
+@Setter
 @RequiredArgsConstructor
-@ToString
-public class DetailResponseVO {
+public class BoardModel {
     @Schema(description = "아이디")
     private Long id;
     @Schema(description = "제목")
@@ -33,6 +31,4 @@ public class DetailResponseVO {
     private String categoryCode;
     @Schema(description = "파일첨부 유무")
     private String attachYn;
-    @Schema(description = "파일첨부 리스트")
-    private List<AttachDTO> attachFiles;
 }

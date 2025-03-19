@@ -37,7 +37,20 @@ public class BoardService {
      * @param id
      */
     public DetailResponseVO retrieveDetail(Long id) {
-        return boardApiRepository.retrieveDetail(id);
+        boardApiRepository.updateViewCnt(id);
+        BoardModel boardModel = null;
+        List<AttachDTO> attachList = null;
+
+        boardModel = boardApiRepository.retrieveDetail(id);
+        if (boardModel.getAttachYn().equals("Y")) {
+            attachList = boardApiRepository.retrieveAttachList(id);
+        }
+
+        DetailResponseMapper mapper = DetailResponseMapper.INSTANCE;
+        DetailResponseVO responseVO = mapper.toDetailResponseVO(boardModel, attachList);
+        log.info("responseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVO: {}", responseVO.toString());
+
+        return responseVO;
     }
 
     /**
@@ -46,7 +59,10 @@ public class BoardService {
      */
     public long insertBoard(InsertEntity insertEntity) throws IOException {
 
-        long id = boardApiRepository.insert(insertEntity);
+        boardApiRepository.insert(insertEntity);
+        long id = insertEntity.getId();
+
+        log.info("id: {}", id);
 
         if (insertEntity.getAttachYn().equals("N")) {
             log.info("첨부파일 없음");
@@ -85,7 +101,7 @@ public class BoardService {
         String storeFileName = uuid + "_" + System.currentTimeMillis() + extension;
 
         // 첨부파일 경로
-        String filePath = Constants.IMAGE_PATH + storeFileName;
+        String filePath = Constants.ATTACH_PATH + storeFileName;
 
         file.transferTo(new File(filePath));
 

@@ -74,7 +74,7 @@
 <!--            </otherwise>-->
 <!--        </choose>-->
 
-    <select id="findById" parameterType="long" resultType="detailResponse">
+    <select id="findById" parameterType="long" resultType="boardModel">
         SELECT b.id, b.title, b.content, b.writer, b.viewCnt, b.createdAt, b.updatedAt, b.attachYn, b.categoryCode, c.name AS categoryName
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
@@ -127,9 +127,9 @@
         VALUES(#{boardId}, #{originalFileName}, #{storedFileName}, #{fileUri}, #{size}, #{orderBy});
     </insert>
 
-    <select id="getFiles" parameterType="long">
+    <select id="getAttachList" parameterType="long" resultType="attach">
         SELECT * FROM tb_board_attach
-        WHERE boardId=#{boardId}
+        WHERE boardId=#{id}
         ORDER BY orderBy;
     </select>
 

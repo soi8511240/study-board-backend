@@ -37,8 +37,26 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public DetailResponseVO retrieveDetail(Long id) {
+    public BoardModel retrieveDetail(Long id) {
         return sql.selectOne("BoardApi.findById", id);
+    }
+
+    /**
+     * 첨부파일리스트 가져오기
+     * @param id
+     * @return
+     */
+    public List<AttachDTO> retrieveAttachList(Long id) {
+        return sql.selectList("BoardApi.getAttachList", id);
+    }
+
+    /**
+     * 조회수 증가
+     * @param id
+     * @return
+     */
+    public void updateViewCnt(Long id) {
+        sql.update("BoardApi.updateViewCnt", id);
     }
 
     /**
@@ -77,7 +95,13 @@ public class BoardApiRepository {
         return sql.update("BoardApi.removeById", id);
     }
 
+    /**
+     * 파일 저장
+     * @param attachDTO
+     * @return
+     */
     public void saveFile(AttachDTO attachDTO) {
         sql.insert("BoardApi.saveFile", attachDTO);
     }
+
 }

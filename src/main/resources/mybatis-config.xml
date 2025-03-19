@@ -10,6 +10,7 @@
 
     <typeAliases>
 
+        <typeAlias type="kr.co.test.week2board.board.model.BoardModel" alias="boardModel" />
         <typeAlias type="kr.co.test.week2board.board.model.ListsBoardVO" alias="listsBoard" />
         <typeAlias type="kr.co.test.week2board.board.model.ListsEntity" alias="listsEntity" />
         <typeAlias type="kr.co.test.week2board.board.model.DetailResponseVO" alias="detailResponse" />

@@ -199,7 +199,7 @@ CREATE TABLE tb_board_attach (
 
 COMMIT;
 SELECT * FROM tb_board_attach
-WHERE boardId=1
+
 ORDER BY orderBy;
 
 # String boardId;

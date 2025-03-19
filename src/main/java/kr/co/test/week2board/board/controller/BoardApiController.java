@@ -59,7 +59,7 @@ public class BoardApiController {
         return response;
     }
 
-    @RequestMapping(value = "/insert", method=RequestMethod.POST)
+    @RequestMapping(value = "/insert")
     @Operation(summary = "게시글 작성", description = "게시글 작성에 사용하는 API입니다.")
     public long insertCode(@RequestBody @Valid InsertRequestDTO insertRequestDTO) throws IOException {
         long response = 0L;

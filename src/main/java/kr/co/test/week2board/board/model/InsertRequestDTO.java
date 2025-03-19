@@ -2,12 +2,14 @@ package kr.co.test.week2board.board.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@Data
 @Getter
 @ToString
 @Schema(description = "게시글 작성 DTO 입니다.")
@@ -35,6 +37,8 @@ public class InsertRequestDTO {
 //            message = "비밀번호는 영문 대,소문자와 숫자, 특수기호가 적어도 1개 이상씩 포함된 8 ~20자의 비밀번호여야 합니다."
 //    )
         String password;
+
+        @Schema(description = "첨부파일")
         List<MultipartFile> attachFiles;
 
 }

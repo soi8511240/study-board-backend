@@ -31,7 +31,9 @@ public interface InsertEntityMapper {
         insertEntity.setCreatedAt(CommonUtil.getToday());
         insertEntity.setUpdatedAt(CommonUtil.getToday());
         insertEntity.setViewCnt(0L);
-        if (insertRequestDTO.getAttachFiles().get(0).isEmpty()){
+
+        if (insertRequestDTO.getAttachFiles() == null || insertRequestDTO.getAttachFiles().isEmpty()
+                || insertRequestDTO.getAttachFiles().get(0).isEmpty()) {
             insertEntity.setAttachYn("N");
             return;
         }
