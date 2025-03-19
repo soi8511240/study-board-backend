@@ -11,7 +11,8 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(
         componentModel = SPRING,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface InsertEntityMapper {
     InsertEntityMapper INSTANCE = Mappers.getMapper(InsertEntityMapper.class);
@@ -22,15 +23,18 @@ public interface InsertEntityMapper {
     /**
      *  useYn, replyYn : Default 'Y' 설정
      *  createdAt, updatedAt, viewCnt, categoryName, attachYn 값 설정
-     * @param ignoredRequest 안쓰는 파라미터입니다.
      */
     @AfterMapping // or @BeforeMapping
-    default void setDefault(InsertRequestDTO ignoredRequest, @MappingTarget InsertEntity insertEntity) {
+    default void setDefault(InsertRequestDTO insertRequestDTO, @MappingTarget InsertEntity insertEntity) {
         insertEntity.setUseYn("Y");
         insertEntity.setReplyYn("N");
         insertEntity.setCreatedAt(CommonUtil.getToday());
         insertEntity.setUpdatedAt(CommonUtil.getToday());
         insertEntity.setViewCnt(0L);
-        insertEntity.setAttachYn("N");
+        if (insertRequestDTO.getAttachFiles().get(0).isEmpty()){
+            insertEntity.setAttachYn("N");
+            return;
+        }
+        insertEntity.setAttachYn("Y");
     }
 }

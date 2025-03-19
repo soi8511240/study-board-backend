@@ -1,8 +1,5 @@
 package kr.co.test.week2board.board.model;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -21,6 +18,7 @@ public record UpdateRequestDTO (
     Long viewCnt,
     String categoryName,
     String attachYn,
-    List<MultipartFile> attachFiles
+    List<AttachDTO> attachLists,
+    List<MultipartFile> attachMultiFiles
     ){
 }

@@ -10,17 +10,16 @@
 
     <typeAliases>
 
-
         <typeAlias type="kr.co.test.week2board.board.model.ListsBoardVO" alias="listsBoard" />
         <typeAlias type="kr.co.test.week2board.board.model.ListsEntity" alias="listsEntity" />
-
         <typeAlias type="kr.co.test.week2board.board.model.DetailResponseVO" alias="detailResponse" />
-
         <typeAlias type="kr.co.test.week2board.board.model.InsertEntity" alias="insertEntity" />
-
         <typeAlias type="kr.co.test.week2board.board.model.PasswordVO" alias="password" />
-
         <typeAlias type="kr.co.test.week2board.board.model.UpdateRequestDTO" alias="updateRequest" />
+
+        <typeAlias type="kr.co.test.week2board.board.model.AttachDTO" alias="attach" />
+
+        <typeAlias type="kr.co.test.week2board.codes.model.CategoryResponseVO" alias="categories" />
 
     </typeAliases>
 

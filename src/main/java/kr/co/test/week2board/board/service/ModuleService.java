@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Objects;
 
 @Slf4j
@@ -41,7 +42,7 @@ public class ModuleService {
      * @param insertRequestDTO
      * @return
      */
-    public long insertBoard(@Valid InsertRequestDTO insertRequestDTO) {
+    public long insertBoard(@Valid InsertRequestDTO insertRequestDTO) throws IOException {
         InsertEntityMapper mapper = InsertEntityMapper.INSTANCE;
         InsertEntity insertEntity = mapper.toInsertBoardEntity(insertRequestDTO);
 

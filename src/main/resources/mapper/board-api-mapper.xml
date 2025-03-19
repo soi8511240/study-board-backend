@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+<!--        DATE_FORMAT,
+-->
 <mapper namespace="BoardApi">
 
     <sql id="selectWhere">
@@ -73,7 +75,7 @@
 <!--        </choose>-->
 
     <select id="findById" parameterType="long" resultType="detailResponse">
-        SELECT b.id, b.title, b.content, b.writer, b.viewCnt, b.createdAt, b.updatedAt, b.attachYn, c.name AS categoryName
+        SELECT b.id, b.title, b.content, b.writer, b.viewCnt, b.createdAt, b.updatedAt, b.attachYn, b.categoryCode, c.name AS categoryName
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
@@ -106,11 +108,11 @@
         WHERE id = #{id};
     </update>
 
-<!--    <select id="categoryAll" resultType="category">-->
-<!--        SELECT *-->
-<!--        FROM tb_category-->
-<!--        WHERE useYn = 'Y';-->
-<!--    </select>-->
+    <select id="categoryAll" resultType="categories">
+        SELECT *
+        FROM tb_category
+        WHERE useYn = 'Y';
+    </select>
 
     <update id="removeById" parameterType="Long">
         UPDATE tb_board
@@ -120,10 +122,16 @@
             id = ${id};
     </update>
 
-<!--    <insert id="saveFile" parameterType="attach">-->
-<!--        INSERT INTO board_attach (boardId, originalFileName, storedFileName)-->
-<!--        VALUES(#{boardId}, #{originalFileName}, #{storedFileName});-->
-<!--    </insert>-->
+    <insert id="saveFile" parameterType="attach">
+        INSERT INTO tb_board_attach (boardId, originalFileName, storedFileName, fileUri, size, orderBy)
+        VALUES(#{boardId}, #{originalFileName}, #{storedFileName}, #{fileUri}, #{size}, #{orderBy});
+    </insert>
+
+    <select id="getFiles" parameterType="long">
+        SELECT * FROM tb_board_attach
+        WHERE boardId=#{boardId}
+        ORDER BY orderBy;
+    </select>
 
 <!--    <select id="attachAll" parameterType="Long" resultType="attach">-->
 <!--        SELECT * FROM board_attach-->

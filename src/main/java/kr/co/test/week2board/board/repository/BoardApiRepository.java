@@ -73,7 +73,11 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public long removeById(Long id) {
+    public long removeById(Long id){
         return sql.update("BoardApi.removeById", id);
+    }
+
+    public void saveFile(AttachDTO attachDTO) {
+        sql.insert("BoardApi.saveFile", attachDTO);
     }
 }

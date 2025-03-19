@@ -17,5 +17,5 @@ public record ListsRequestDTO(
     String toDt,
 
     @Schema(description = "이동할 페이징 번호")
-    int currentPage
+    Integer currentPage
 ) {}

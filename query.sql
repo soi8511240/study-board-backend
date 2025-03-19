@@ -184,20 +184,31 @@ CREATE TABLE board_binary_attach (
                               fileName TEXT                        -- 파일 이름
 );
 
-CREATE TABLE board_attach (
+# DROP TABLE board_attach;
+DROP TABLE tb_board_attach;
+CREATE TABLE tb_board_attach (
                         id BIGINT AUTO_INCREMENT PRIMARY KEY,   -- 첨부파일 ID
                         boardId BIGINT,                         -- 게시판 번호
                         originalFileName TEXT,                  -- 파일 이름
-                        storedFileName TEXT,                    -- 파일 이름
+                        storedFileName TEXT,                    -- 파일 저장 이름
+                        fileUri TEXT,                           -- 파일 다운로드 경로
+                        orderBy INT,                            -- 저장 순서
+                        size INT,                               -- 파일크기
                         useYn CHAR(1) DEFAULT 'Y'               -- 사용 여부 (Y: 사용, N: 미사용)
-
 );
 
 COMMIT;
-SELECT * FROM board_attach;
-INSERT INTO board_attach (boardId, originalFileName, storedFileName)
-VALUES();
+SELECT * FROM tb_board_attach
+WHERE boardId=1
+ORDER BY orderBy;
 
-DROP table board_attach;
+# String boardId;
+# String originalFileName;
+# String storedFileName;
+# String fileUri;
+# int size;
+# int orderBy;
+INSERT INTO tb_board_attach (boardId, originalFileName, storedFileName, fileUri, size, orderBy)
+VALUES();
 
 commit;

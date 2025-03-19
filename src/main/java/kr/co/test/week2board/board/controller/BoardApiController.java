@@ -11,7 +11,10 @@ import kr.co.test.week2board.board.model.*;
 import kr.co.test.week2board.board.service.ModuleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Tag(name = "Board-Controller", description = "게시글 API 엔드포인트")
 //@SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
@@ -38,16 +41,12 @@ public class BoardApiController {
                 )
             }
     )
-    public ListsResponseVO findAll(ListsRequestDTO listRequest) {
+    public ResponseEntity<ListsResponseVO> findAll(ListsRequestDTO listRequest) {
         ListsResponseVO responseLists = null;
 
-        try {
-            responseLists = moduleService.retrieveAll(listRequest);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        responseLists = moduleService.retrieveAll(listRequest);
 
-        return responseLists;
+        return ResponseEntity.ok(responseLists);
     }
 
     @Operation(summary = "게시글 단건 상세", description = "게시글 단건 상세 내용를 조회합니다.")
@@ -55,25 +54,17 @@ public class BoardApiController {
     public DetailResponseVO findById(@RequestParam Long id) {
         DetailResponseVO response = null;
 
-        try {
-            response = moduleService.retrieveDetail(id);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        response = moduleService.retrieveDetail(id);
 
         return response;
     }
 
     @RequestMapping(value = "/insert", method=RequestMethod.POST)
     @Operation(summary = "게시글 작성", description = "게시글 작성에 사용하는 API입니다.")
-    public long insertCode(@RequestBody @Valid InsertRequestDTO insertRequestDTO) {
+    public long insertCode(@RequestBody @Valid InsertRequestDTO insertRequestDTO) throws IOException {
         long response = 0L;
 
-        try {
-            response = moduleService.insertBoard(insertRequestDTO);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        response = moduleService.insertBoard(insertRequestDTO);
 
         return response;
     }
@@ -83,11 +74,7 @@ public class BoardApiController {
     public boolean isMatchPassword(@RequestParam Long id, @RequestParam String password) {
         boolean response = false;
 
-        try {
-            response = moduleService.matchedPassword(id,password);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        response = moduleService.matchedPassword(id,password);
 
         return response;
     }
@@ -97,11 +84,7 @@ public class BoardApiController {
     public long updateBoardById(@RequestBody @Valid UpdateRequestDTO updateRequestDTO) {
         long response = 0L;
 
-        try {
-            response = moduleService.updateById(updateRequestDTO);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        response = moduleService.updateById(updateRequestDTO);
 
         return response;
     }
@@ -111,13 +94,8 @@ public class BoardApiController {
     public long removeBoardById(@RequestParam Long id) {
         long response = 0L;
 
-        try {
-            response = moduleService.removeById(id);
-        } catch (Exception e) {
-            log.error("=========================== {}",e.getMessage());
-        }
+        response = moduleService.removeById(id);
 
         return response;
     }
-
 }

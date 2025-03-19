@@ -7,7 +7,8 @@ import static org.mapstruct.MappingConstants.ComponentModel.SPRING;
 
 @Mapper(
         componentModel = SPRING,
-        unmappedTargetPolicy = ReportingPolicy.IGNORE
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface ListsEntityMapper {
     ListsEntityMapper INSTANCE = Mappers.getMapper(ListsEntityMapper.class);
