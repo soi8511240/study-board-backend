@@ -41,14 +41,14 @@ public class BoardService {
         BoardModel boardModel = null;
         List<AttachDTO> attachList = null;
 
-        boardModel = boardApiRepository.retrieveDetail(id);
-        if (boardModel.getAttachYn().equals("Y")) {
+        boardModel = boardApiRepository.retrieveDetail(id); // null 체크를 해야하는데.. Optional<>
+//        if (boardModel.getAttachYn().equals("Y")) {
+        if ("Y".equals(boardModel.getAttachYn())) {
             attachList = boardApiRepository.retrieveAttachList(id);
         }
 
         DetailResponseMapper mapper = DetailResponseMapper.INSTANCE;
         DetailResponseVO responseVO = mapper.toDetailResponseVO(boardModel, attachList);
-        log.info("responseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVOresponseVO: {}", responseVO.toString());
 
         return responseVO;
     }
@@ -79,7 +79,10 @@ public class BoardService {
             insertFile(attachFile, i , id); // 인덱스를 전달
         }
 
+        // reply 검색
+
         return id;
+
 
         //비교 작업
         // 없는거 파일 지워.

@@ -27,8 +27,8 @@ public class GlobalExceptionHandler {
 
         Map<String,String> map = new HashMap<>();
         map.put("error", status.getReasonPhrase());
-        map.put("code", e.getClass().getSimpleName());
-        map.put("message", e.getMessage());
+        map.put("code", e.getClass().getSimpleName()); // Todo : 정해진약이 있다면.. 줌
+        map.put("message", e.getMessage()); // Todo:  필요한부분만. 전체를 다주면안됨.
 
         log.error("############################################:{}", e.getMessage());
         return new ResponseEntity<>(map, headers, status);
