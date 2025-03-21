@@ -7,6 +7,7 @@ import kr.co.test.week2board.board.repository.BoardApiRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -20,24 +21,24 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardApiRepository boardApiRepository;
-    BoardModelMapper mapper = BoardModelMapper.INSTANCE;
+    BoardMapper mapper = BoardMapper.INSTANCE;
 
     /**
      * 리스트 서비스
      * @param listsEntity
      */
-    public ListsResponseVO retrieveAll(ListsEntity listsEntity){
-        List<ListsBoardVO> listsBoardVO = boardApiRepository.retrieveAll(listsEntity);
+    public ListsResponse retrieveAll(ListsEntity listsEntity){
+        List<ListsModel> boardModelList = boardApiRepository.retrieveAll(listsEntity);
         long totalCnt = boardApiRepository.totalCnt(listsEntity);
 
-        return new ListsResponseVO(totalCnt, listsBoardVO);
+        return new ListsResponse(totalCnt, boardModelList);
     }
 
     /**
      * 상세 서비스
      * @param id
      */
-    public DetailResponseVO retrieveDetail(Long id) {
+    public DetailResponse retrieveDetail(Long id) {
         boardApiRepository.updateViewCnt(id);
         BoardModel boardModel = null;
         List<AttachModel> attachList = null;
@@ -48,9 +49,7 @@ public class BoardService {
             attachList = boardApiRepository.retrieveAttachList(id);
         }
 
-        DetailResponseVO responseVO = mapper.toDetailResponseVO(boardModel, attachList);
-
-        return responseVO;
+        return mapper.toDetailResponseVO(boardModel, attachList);
     }
 
     /**
@@ -60,6 +59,7 @@ public class BoardService {
     public long insertBoard(InsertEntity insertEntity) throws IOException {
 
         boardApiRepository.insert(insertEntity);
+
         long id = insertEntity.getId();
 
         log.info("id: {}", id);
@@ -123,16 +123,16 @@ public class BoardService {
      * 비밀번호 비교 서비스
      * @param id
      */
-    public PasswordVO matchedPassword(long id) {
+    public isCurrentPassword matchedPassword(long id) {
         return boardApiRepository.matchedPassword(id);
     }
 
     /**
      * 글 수정 서비스
-     * @param updateRequestDTO
+     * @param updateRequest
      */
-    public long updateById(@Valid UpdateRequestDTO updateRequestDTO) {
-        return boardApiRepository.updateById(updateRequestDTO);
+    public long updateById(@Valid UpdateRequest updateRequest) {
+        return boardApiRepository.updateById(updateRequest);
     }
 
     /**

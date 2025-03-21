@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class BoardApiRepository {
      * @param listsEntity
      * @return
      */
-    public List<ListsBoardVO> retrieveAll(ListsEntity listsEntity) { return sql.selectList("BoardApi.findAll", listsEntity); }
+    public List<ListsModel> retrieveAll(ListsEntity listsEntity) { return sql.selectList("BoardApi.findAll", listsEntity); }
 
     /**
      * 게시글 상세
@@ -46,7 +45,7 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public List<AttachDTO> retrieveAttachList(Long id) {
+    public List<AttachModel> retrieveAttachList(Long id) {
         return sql.selectList("BoardApi.getAttachList", id);
     }
 
@@ -73,17 +72,17 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public PasswordVO matchedPassword(long id) {
+    public isCurrentPassword matchedPassword(long id) {
         return sql.selectOne("BoardApi.findPasswordById", id);
     }
 
     /**
      * 글 수정
-     * @param updateRequestDTO
+     * @param updateRequest
      * @return
      */
-    public long updateById(@Valid UpdateRequestDTO updateRequestDTO) {
-        return sql.update("BoardApi.updateById", updateRequestDTO);
+    public long updateById(@Valid UpdateRequest updateRequest) {
+        return sql.update("BoardApi.updateById", updateRequest);
     }
 
     /**
@@ -97,11 +96,11 @@ public class BoardApiRepository {
 
     /**
      * 파일 저장
-     * @param attachDTO
+     * @param attachModel
      * @return
      */
-    public void saveFile(AttachDTO attachDTO) {
-        sql.insert("BoardApi.saveFile", attachDTO);
+    public void saveFile(AttachModel attachModel) {
+        sql.insert("BoardApi.saveFile", attachModel);
     }
 
 }

@@ -15,14 +15,14 @@ import java.util.Objects;
 public class ModuleService {
 
     private final BoardService boardService;
-    BoardModelMapper mapper = BoardModelMapper.INSTANCE;
+    BoardMapper mapper = BoardMapper.INSTANCE;
 
     /**
      * 리스트
      * @param listRequest
      * @return
      */
-    public ListsResponseVO retrieveAll(ListsRequestDTO listRequest) {
+    public ListsResponse retrieveAll(ListsRequest listRequest) {
         ListsEntity listsEntity = mapper.toListsEntity(listRequest);
 
         return boardService.retrieveAll(listsEntity);
@@ -33,17 +33,17 @@ public class ModuleService {
      * @param id
      * @return
      */
-    public DetailResponseVO retrieveDetail(Long id) {
+    public DetailResponse retrieveDetail(Long id) {
         return boardService.retrieveDetail(id);
     }
 
     /**
      * 글 등록
-     * @param insertRequestDTO
+     * @param insertRequest
      * @return
      */
-    public long insertBoard(@Valid InsertRequestDTO insertRequestDTO) throws IOException {
-        InsertEntity insertEntity = mapper.toInsertBoardEntity(insertRequestDTO);
+    public long insertBoard(@Valid InsertRequest insertRequest) throws IOException {
+        InsertEntity insertEntity = mapper.toInsertBoardEntity(insertRequest);
 
         return boardService.insertBoard(insertEntity);
     }
@@ -62,11 +62,11 @@ public class ModuleService {
 
     /**
      * 글 수정
-     * @param updateRequestDTO
+     * @param updateRequest
      * @return
      */
-    public long updateById(@Valid UpdateRequestDTO updateRequestDTO) {
-        return boardService.updateById(updateRequestDTO);
+    public long updateById(@Valid UpdateRequest updateRequest) {
+        return boardService.updateById(updateRequest);
     }
 
     public long removeById(Long id) {
