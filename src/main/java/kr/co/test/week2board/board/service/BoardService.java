@@ -20,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardApiRepository boardApiRepository;
+    BoardModelMapper mapper = BoardModelMapper.INSTANCE;
 
     /**
      * 리스트 서비스
@@ -39,7 +40,7 @@ public class BoardService {
     public DetailResponseVO retrieveDetail(Long id) {
         boardApiRepository.updateViewCnt(id);
         BoardModel boardModel = null;
-        List<AttachDTO> attachList = null;
+        List<AttachModel> attachList = null;
 
         boardModel = boardApiRepository.retrieveDetail(id); // null 체크를 해야하는데.. Optional<>
 //        if (boardModel.getAttachYn().equals("Y")) {
@@ -47,7 +48,6 @@ public class BoardService {
             attachList = boardApiRepository.retrieveAttachList(id);
         }
 
-        DetailResponseMapper mapper = DetailResponseMapper.INSTANCE;
         DetailResponseVO responseVO = mapper.toDetailResponseVO(boardModel, attachList);
 
         return responseVO;
@@ -108,15 +108,15 @@ public class BoardService {
 
         file.transferTo(new File(filePath));
 
-        AttachDTO attachDTO = new AttachDTO();
-        attachDTO.setBoardId(id);
-        attachDTO.setOriginalFileName(fileName);
-        attachDTO.setStoredFileName(storeFileName);
-        attachDTO.setFileUri(Constants.ATTACH_URL);
-        attachDTO.setOrderBy(index);
-        attachDTO.setSize(file.getSize());
+        AttachModel attachModel = new AttachModel();
+        attachModel.setBoardId(id);
+        attachModel.setOriginalFileName(fileName);
+        attachModel.setStoredFileName(storeFileName);
+        attachModel.setFileUri(Constants.ATTACH_URL);
+        attachModel.setOrderBy(index);
+        attachModel.setSize(file.getSize());
 
-        boardApiRepository.saveFile(attachDTO);
+        boardApiRepository.saveFile(attachModel);
     };
 
     /**

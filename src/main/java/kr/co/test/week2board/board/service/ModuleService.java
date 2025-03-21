@@ -15,6 +15,7 @@ import java.util.Objects;
 public class ModuleService {
 
     private final BoardService boardService;
+    BoardModelMapper mapper = BoardModelMapper.INSTANCE;
 
     /**
      * 리스트
@@ -22,7 +23,6 @@ public class ModuleService {
      * @return
      */
     public ListsResponseVO retrieveAll(ListsRequestDTO listRequest) {
-        ListsEntityMapper mapper = ListsEntityMapper.INSTANCE;
         ListsEntity listsEntity = mapper.toListsEntity(listRequest);
 
         return boardService.retrieveAll(listsEntity);
@@ -43,7 +43,6 @@ public class ModuleService {
      * @return
      */
     public long insertBoard(@Valid InsertRequestDTO insertRequestDTO) throws IOException {
-        InsertEntityMapper mapper = InsertEntityMapper.INSTANCE;
         InsertEntity insertEntity = mapper.toInsertBoardEntity(insertRequestDTO);
 
         return boardService.insertBoard(insertEntity);

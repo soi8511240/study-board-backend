@@ -41,12 +41,12 @@ public class BoardApiController {
                 )
             }
     )
-    public ResponseEntity<ListsResponseVO> findAll(ListsRequestDTO listRequest) {
+    public ListsResponseVO findAll(ListsRequestDTO listRequest) {
         ListsResponseVO responseLists = null;
 
         responseLists = moduleService.retrieveAll(listRequest);
 
-        return ResponseEntity.ok(responseLists);
+        return responseLists;
     }
 
     @Operation(summary = "게시글 단건 상세", description = "게시글 단건 상세 내용를 조회합니다.")
