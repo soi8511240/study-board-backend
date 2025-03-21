@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @ToString
 @Schema(description = "게시글 작성 DTO 입니다.")
-public class InsertRequestDTO {
+public class InsertRequest {
 
         @NotBlank(message = "제목은 필수 값입니다.")
         @Schema(description = "제목")

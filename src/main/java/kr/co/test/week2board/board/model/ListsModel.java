@@ -1,24 +1,18 @@
 package kr.co.test.week2board.board.model;
 
+
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
-@Data
 @Getter
-@RequiredArgsConstructor
 @ToString
-public class DetailResponseVO {
+@Schema(description = "게시글 목록의 게시글 단건 VO")
+public class ListsModel {
     @Schema(description = "아이디")
     private Long id;
     @Schema(description = "제목")
     private String title;
-    @Schema(description = "게시글 내용")
-    private String content;
     @Schema(description = "글쓴이")
     private String writer;
     @Schema(description = "게시일")
@@ -29,10 +23,6 @@ public class DetailResponseVO {
     private Long viewCnt;
     @Schema(description = "카테고리 분류 이름")
     private String categoryName;
-    @Schema(description = "카테고리 분류 ID")
-    private String categoryCode;
     @Schema(description = "파일첨부 유무")
     private String attachYn;
-    @Schema(description = "파일첨부 리스트")
-    private List<AttachDTO> attachFiles;
 }

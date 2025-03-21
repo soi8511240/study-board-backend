@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-public record UpdateRequestDTO (
+public record UpdateRequest(
     Long id,
     String title,
     String content,
@@ -18,7 +18,7 @@ public record UpdateRequestDTO (
     Long viewCnt,
     String categoryName,
     String attachYn,
-    List<AttachDTO> attachLists,
+    List<AttachModel> attachLists,
     List<MultipartFile> attachMultiFiles
     ){
 }

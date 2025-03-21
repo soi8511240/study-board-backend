@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class AttachDTO {
+public class AttachModel {
     long boardId;
     String originalFileName;
     String storedFileName;

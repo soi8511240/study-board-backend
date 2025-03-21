@@ -3,7 +3,7 @@ package kr.co.test.week2board.board.model;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "게시글 검색 조건 DTO")
-public record ListsRequestDTO(
+public record ListsRequest(
     @Schema(description = "카테고리 ID *100부터 시작*", example = "100")
     String categoryId,
 
