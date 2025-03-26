@@ -1,17 +1,11 @@
 package kr.co.test.week2board.exception;
 
-import kr.co.test.week2board.board.util.CommonResponse;
+import kr.co.test.week2board.response.GlobalResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -32,7 +26,7 @@ public class GlobalExceptionHandler {
     );
 
     @ExceptionHandler({Exception.class})
-    public CommonResponse<String> handleException(Exception e) {
+    public GlobalResponse<String> handleException(Exception e) {
         String defaultMessage = ERROR_MESSAGES.getOrDefault(Exception.class, "알 수 없는 예외가 발생했습니다.");
         String message = ERROR_MESSAGES.getOrDefault(e.getClass(), defaultMessage);
         // 새로운 예외와 메시지 추가
@@ -40,7 +34,7 @@ public class GlobalExceptionHandler {
         // ERROR_MESSAGES.put(SQLException.class, "데이터베이스 작업 중 오류가 발생했습니다.");
 
         log.error("\n\n\n\n\n\n############################################ errorHandler:{}\n\n\n\n\n\n\n\n", e.getMessage());
-        return CommonResponse.apiResponse(e, message);
+        return GlobalResponse.apiResponse(e, message);
     }
 
 }

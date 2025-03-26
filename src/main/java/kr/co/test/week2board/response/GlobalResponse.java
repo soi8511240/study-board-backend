@@ -1,6 +1,11 @@
-package kr.co.test.week2board.board.util;
+package kr.co.test.week2board.response;
 
-public class CommonResponse<T> {
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
+public class GlobalResponse<T> {
 
     private static final String SUCCESS_STATUS = "success";
     private static final String FAIL_STATUS = "fail";
@@ -11,19 +16,19 @@ public class CommonResponse<T> {
     private T data;
 
     // 기본 생성자
-    private CommonResponse(T data, String message, String success) {
+    private GlobalResponse(T data, String message, String success) {
         this.message = message;
         this.success = success;
         this.data = data;
     }
 
     /** 성공 응답을 반환하는 정적 팩토리 메서드 */
-    public static <T> CommonResponse<T> apiResponse(T data) {
-        return new CommonResponse<>(data, "Request processed successfully", SUCCESS_STATUS);
+    public static <T> GlobalResponse<T> apiResponse(T data) {
+        return new GlobalResponse<>(data, "Request processed successfully", SUCCESS_STATUS);
     }
 
     /** 에러 응답을 반환하는 정적 팩토리 메서드 */
-    public static <T, E> CommonResponse<T> apiResponse(E exception, String message) {
+    public static <T, E> GlobalResponse<T> apiResponse(E exception, String message) {
 
         String errorMessage;
 
@@ -36,7 +41,7 @@ public class CommonResponse<T> {
             errorMessage = message + " | " + exception.toString();
         }
 
-        return new CommonResponse<>(null, message + " | " + errorMessage, ERROR_STATUS);
+        return new GlobalResponse<>(null, message + " | " + errorMessage, ERROR_STATUS);
     }
 
 
