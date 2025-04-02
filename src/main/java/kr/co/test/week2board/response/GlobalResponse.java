@@ -12,17 +12,17 @@ public class GlobalResponse<T> {
     private static final String ERROR_STATUS = "error";
 
     private String message;
-    private String success;
+    private String state;
     private T data;
 
     // 기본 생성자
-    private GlobalResponse(T data, String message, String success) {
+    private GlobalResponse(T data, String message, String state) {
         this.message = message;
-        this.success = success;
+        this.state = state;
         this.data = data;
     }
 
-    /** 성공 응답을 반환하는 정적 팩토리 메서드 */
+    /** 성공 응답을 반환하는 정적  메서드 */
     public static <T> GlobalResponse<T> apiResponse(T data) {
         return new GlobalResponse<>(data, "Request processed successfully", SUCCESS_STATUS);
     }
@@ -31,7 +31,6 @@ public class GlobalResponse<T> {
     public static <T, E> GlobalResponse<T> apiResponse(E exception, String message) {
 
         String errorMessage;
-
         // 에러 객체의 타입에 따라 메시지를 처리
         if (exception instanceof Exception) {
             // Exception이면 에러 메시지 포함

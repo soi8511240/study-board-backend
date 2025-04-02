@@ -19,6 +19,8 @@ public class DetailResponse {
     private String title;
     @Schema(description = "게시글 내용")
     private String content;
+    @Schema(description = "비밀번호")
+    private String password;
     @Schema(description = "글쓴이")
     private String writer;
     @Schema(description = "게시일")

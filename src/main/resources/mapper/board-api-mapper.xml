@@ -75,7 +75,7 @@
 <!--        </choose>-->
 
     <select id="findById" parameterType="long" resultType="boardModel">
-        SELECT b.id, b.title, b.content, b.writer, b.viewCnt, b.createdAt, b.updatedAt, b.attachYn, b.categoryCode, c.name AS categoryName
+        SELECT b.*, c.name AS categoryName
         FROM tb_board b
                  LEFT JOIN tb_category c ON b.categoryCode = c.id
         WHERE b.useYn = 'Y'
@@ -83,7 +83,7 @@
         ORDER BY b.id DESC;
     </select>
 
-    <select id="findPasswordById" parameterType="long" resultType="password">
+    <select id="findPasswordById" parameterType="long" resultType="string">
         SELECT *
         FROM tb_board
         WHERE id = #{id};

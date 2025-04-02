@@ -15,6 +15,8 @@ public class BoardModel {
     private Long id;
     @Schema(description = "제목")
     private String title;
+    @Schema(description = "비밀번호")
+    private String password;
     @Schema(description = "게시글 내용")
     private String content;
     @Schema(description = "글쓴이")

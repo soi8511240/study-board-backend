@@ -72,7 +72,7 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public isCurrentPassword matchedPassword(long id) {
+    public boolean matchedPassword(long id) {
         return sql.selectOne("BoardApi.findPasswordById", id);
     }
 

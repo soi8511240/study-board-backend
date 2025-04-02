@@ -44,6 +44,7 @@ public class BoardService {
         List<AttachModel> attachList = null;
 
         boardModel = boardApiRepository.retrieveDetail(id); // null 체크를 해야하는데.. Optional<>
+        log.info("boardModel: {}", boardModel.getPassword());
 //        if (boardModel.getAttachYn().equals("Y")) {
         if ("Y".equals(boardModel.getAttachYn())) {
             attachList = boardApiRepository.retrieveAttachList(id);
@@ -64,7 +65,7 @@ public class BoardService {
 
         log.info("id: {}", id);
 
-        if (insertEntity.getAttachYn().equals("N")) {
+        if ("N".equals(insertEntity.getAttachYn())) {
             log.info("첨부파일 없음");
 
             return id;
@@ -123,7 +124,7 @@ public class BoardService {
      * 비밀번호 비교 서비스
      * @param id
      */
-    public isCurrentPassword matchedPassword(long id) {
+    public boolean matchedPassword(long id) {
         return boardApiRepository.matchedPassword(id);
     }
 
