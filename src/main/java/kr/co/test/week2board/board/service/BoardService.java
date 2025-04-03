@@ -124,7 +124,7 @@ public class BoardService {
      * 비밀번호 비교 서비스
      * @param id
      */
-    public boolean matchedPassword(long id) {
+    public String matchedPassword(long id) {
         return boardApiRepository.matchedPassword(id);
     }
 

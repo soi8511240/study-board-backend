@@ -83,6 +83,13 @@
         ORDER BY b.id DESC;
     </select>
 
+    <select id="passwordById" parameterType="long" resultType="boardModel">
+        SELECT b.password
+        FROM tb_board b
+        WHERE b.useYn = 'Y'
+          AND b.id = #{id};
+    </select>
+
     <select id="findPasswordById" parameterType="long" resultType="string">
         SELECT *
         FROM tb_board

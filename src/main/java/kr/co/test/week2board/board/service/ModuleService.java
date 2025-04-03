@@ -55,7 +55,7 @@ public class ModuleService {
      * @return
      */
     public boolean matchedPassword(long id, String password) {
-        String storedPassword = boardService.matchedPassword(id).getPassword();
+        String storedPassword = boardService.matchedPassword(id);
 
         return Objects.equals(storedPassword,password);
     }

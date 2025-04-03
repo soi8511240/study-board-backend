@@ -15,7 +15,6 @@
         <typeAlias type="kr.co.test.week2board.board.model.ListsEntity" alias="listsEntity" />
         <typeAlias type="kr.co.test.week2board.board.model.DetailResponse" alias="detailResponse" />
         <typeAlias type="kr.co.test.week2board.board.model.InsertEntity" alias="insertEntity" />
-        <typeAlias type="kr.co.test.week2board.board.model.isCurrentPassword" alias="password" />
         <typeAlias type="kr.co.test.week2board.board.model.UpdateRequest" alias="updateRequest" />
 
         <typeAlias type="kr.co.test.week2board.board.model.AttachModel" alias="attach" />

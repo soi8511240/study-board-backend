@@ -72,8 +72,8 @@ public class BoardApiRepository {
      * @param id
      * @return
      */
-    public boolean matchedPassword(long id) {
-        return sql.selectOne("BoardApi.findPasswordById", id);
+    public String matchedPassword(long id) {
+        return sql.selectOne("BoardApi.passwordById", id);
     }
 
     /**
