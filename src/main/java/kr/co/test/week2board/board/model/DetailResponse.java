@@ -36,5 +36,5 @@ public class DetailResponse {
     @Schema(description = "파일첨부 유무")
     private String attachYn;
     @Schema(description = "파일첨부 리스트")
-    private List<AttachModel> attachFiles;
+    private List<AttachModel> files;
 }

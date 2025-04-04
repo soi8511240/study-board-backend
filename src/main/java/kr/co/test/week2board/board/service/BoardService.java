@@ -6,6 +6,7 @@ import kr.co.test.week2board.board.model.*;
 import kr.co.test.week2board.board.repository.BoardApiRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,8 @@ import java.util.UUID;
 public class BoardService {
     private final BoardApiRepository boardApiRepository;
     BoardMapper mapper = BoardMapper.INSTANCE;
+
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 리스트 서비스
@@ -40,10 +43,10 @@ public class BoardService {
      */
     public DetailResponse retrieveDetail(Long id) {
         boardApiRepository.updateViewCnt(id);
-        BoardModel boardModel = null;
+
         List<AttachModel> attachList = null;
 
-        boardModel = boardApiRepository.retrieveDetail(id); // null 체크를 해야하는데.. Optional<>
+        BoardModel boardModel = boardApiRepository.retrieveDetail(id); // null 체크를 해야하는데.. Optional<>
         log.info("boardModel: {}", boardModel.getPassword());
 //        if (boardModel.getAttachYn().equals("Y")) {
         if ("Y".equals(boardModel.getAttachYn())) {
@@ -63,35 +66,20 @@ public class BoardService {
 
         long id = insertEntity.getId();
 
-        log.info("id: {}", id);
-
         if ("N".equals(insertEntity.getAttachYn())) {
-            log.info("첨부파일 없음");
-
+            //첨부파일 없음
             return id;
         }
 
-        log.info("첨부파일 있음");
-        // 첨부파일 있을 때
-
+        // 첨부파일 있음
         List<MultipartFile> attachFiles = insertEntity.getAttachFiles(); // Attach 파일 리스트 가져오기
         for (int i = 0; i < attachFiles.size(); i++) {
             MultipartFile attachFile = attachFiles.get(i); // i번째 파일 가져오기
             insertFile(attachFile, i , id); // 인덱스를 전달
         }
 
-        // reply 검색
-
         return id;
 
-
-        //비교 작업
-        // 없는거 파일 지워.
-        // resquest
-        // id: file명
-        // [1],[2],[3] // attachArray {index:1,fileName:''} // Object
-        // [1],[3] // {fileName:'', strageName:'', index:1} // Multi
-//        return boardApiRepository.insert(insertEntity);
     }
 
     private void insertFile(MultipartFile file, int index, long id) throws IOException {
@@ -145,6 +133,5 @@ public class BoardService {
 //        boardApiRepository.removeByIdFromReply(id);
         return boardApiRepository.removeById(id);
     }
-
 
 }

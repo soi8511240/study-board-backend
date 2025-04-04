@@ -22,7 +22,7 @@ public interface BoardMapper {
      * @param attachList
      */
     //    @Mapping(source="boardModel", target="")
-    @Mapping(source="attachList", target="attachFiles")
+    @Mapping(source="attachList", target="files")
     DetailResponse toDetailResponseVO(BoardModel boardModel, List<AttachModel> attachList);
 
     /**
